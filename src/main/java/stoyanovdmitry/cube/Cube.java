@@ -1,10 +1,12 @@
 package stoyanovdmitry.cube;
 
+import stoyanovdmitry.util.Color;
+
 import java.util.Arrays;
 
 public class Cube {
 
-	private static final String SPACES = "      ";
+	private static final String SPACES = "        ";
 
 	private String[][][] cube = {
 			{
@@ -57,31 +59,58 @@ public class Cube {
 		int face = isUp ? 4 : 5;
 
 		for (int row = 0; row < 3; row++) {
-			builder.append(SPACES);
+			builder.append(SPACES)
+					.append("| ");
 
 			for (int sticker = 0; sticker < 3; sticker++) {
-				builder.append(cube[face][row][sticker])
+				builder.append(getColoredSticker(cube[face][row][sticker]))
 						.append(" ");
 			}
 
-			builder.append("\n");
+			builder.append(Color.RESET.getAnsiColor())
+					.append("|")
+					.append("\n");
 		}
 		return builder.toString();
 	}
 
-	public String getFaces() {
+	private String getFaces() {
 
 		StringBuilder builder = new StringBuilder();
 
 		for (int row = 0; row < 3; row++) {
-			for (int face = 0; face < 4; face++) {
+			for (int face = 1; face < 4; face++) {
+				builder.append(Color.RESET.getAnsiColor())
+						.append("| ");
 				for (int sticker = 0; sticker < 3; sticker++) {
-					builder.append(cube[face][row][sticker])
-					.append(" ");
+					builder.append(getColoredSticker(cube[face][row][sticker]))
+							.append(" ");
 				}
+				if (face == 1) face = -1;
+				else if (face == 0) face = 1;
 			}
-			builder.append("\n");
+			builder.append(Color.RESET.getAnsiColor())
+					.append("|")
+					.append("\n");
 		}
 		return builder.toString();
+	}
+
+	private String getColoredSticker(String sticker) {
+
+		switch (sticker) {
+			case "R":
+				return Color.RED.getAnsiColor() + sticker;
+			case "B":
+				return Color.BLUE.getAnsiColor() + sticker;
+			case "G":
+				return Color.GREEN.getAnsiColor() + sticker;
+			case "Y":
+				return Color.YELLOW.getAnsiColor() + sticker;
+			case "O":
+				return Color.ORANGE.getAnsiColor() + sticker;
+			default:
+				return sticker;
+		}
 	}
 }
