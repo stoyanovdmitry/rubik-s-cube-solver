@@ -23,11 +23,13 @@ public class PhaseOne extends AbstractPhase {
 
 	public void computePhase() {
 
-		checkFace(Face.FRONT);
-//
-//		while (!isPhaseDone()) {
-//			checkFace(Face.FRONT);
-//		}
+		while (!isPhaseDone()) {
+			checkFace(Face.FRONT);
+			checkFace(Face.LEFT);
+			checkFace(Face.BACK);
+			checkFace(Face.RIGHT);
+			checkFace(Face.UP);
+		}
 	}
 
 	private void checkFace(Face face) {
@@ -52,73 +54,218 @@ public class PhaseOne extends AbstractPhase {
 
 		switch (face) {
 			case FRONT:
-				replaceFront(x, y, fourStickers);
+				doReplace(x, y, fourStickers[0], fourStickers[1], fourStickers[2], face);
 				break;
 			case LEFT:
-				replaceLeft(x, y, fourStickers);
+				doReplace(x, y, fourStickers[1], fourStickers[3], fourStickers[0], face);
 				break;
 			case RIGHT:
-				replaceRight(x, y, fourStickers);
+				doReplace(x, y, fourStickers[2], fourStickers[0], fourStickers[3], face);
 				break;
 			case BACK:
-				replaceBack(x, y, fourStickers);
+				doReplace(x, y, fourStickers[3], fourStickers[2], fourStickers[1], face);
+				break;
+			case UP:
+				doReplaceUp(x, y, fourStickers);
 				break;
 		}
 	}
 
+	private void doReplaceUp(int x, int y, String[] fourStickers) {
+
+		if (!fourStickers[0].equals("W"))
+			solvePart.append("F F ");
+		else if (!fourStickers[1].equals("W"))
+			solvePart.append("L L ");
+		else if (!fourStickers[2].equals("W"))
+			solvePart.append("R R ");
+		else if (!fourStickers[3].equals("W"))
+			solvePart.append("B B ");
+		else
+			solvePart.append("U ");
+	}
+
+
+	private void doReplace(int x, int y, String up, String left, String right, Face face) {
+
+		if (y == 0) { //done
+			if (!right.equals("W")) {
+				solvePart.append("F R' ");
+				if (up.equals("W"))
+					solvePart.append("F' ");
+			} else if (!left.equals("W")) {
+				solvePart.append("F' L ");
+				if (!up.equals("W"))
+					solvePart.append("F ");
+			} else
+				solvePart.append("U ");
+		} else if (y == 1) { //done
+			if (x == 0) {
+				if (!left.equals("W"))
+					solvePart.append("L ");
+				else if (!right.equals("W")) {
+					solvePart.append("F' F' R' ");
+					if (up.equals("W"))
+						solvePart.append("F F ");
+				} else {
+					solvePart.append("F U ");
+					if (up.equals("W"))
+						solvePart.append("F' ");
+				}
+			} else if (x == 2) {
+				if (!right.equals("W"))
+					solvePart.append("R' ");
+				else if (!left.equals("W")) {
+					solvePart.append("F F L ");
+					if (up.equals("W"))
+						solvePart.append("F' F' ");
+				} else {
+					solvePart.append("F' U ");
+					if (up.equals("W"))
+						solvePart.append("F ");
+				}
+			}
+		} else if (y == 2) { //done
+			if (!right.equals("W")) {
+				solvePart.append("F' R' ");
+			} else if (!left.equals("W")) {
+				solvePart.append("F L ");
+			} else solvePart.append("F F U ");
+		}
+
+		switch (face) {
+			case LEFT:
+				solvePart = new StringBuilder(solvePart.toString()
+						.replaceAll("L", "B")
+						.replaceAll("F", "L")
+						.replaceAll("R", "F")
+				);
+				break;
+			case RIGHT:
+				solvePart = new StringBuilder(solvePart.toString()
+						.replaceAll("R", "B")
+						.replaceAll("F", "R")
+						.replaceAll("L", "F")
+				);
+				break;
+			case BACK:
+				solvePart = new StringBuilder(solvePart.toString()
+						.replaceAll("L", "R")
+						.replaceAll("F", "B")
+						.replaceAll("R", "L")
+				);
+				break;
+		}
+
+		applyPart();
+	}
+/*
 	private void replaceBack(int x, int y, String[] fourStickers) {
 
 	}
 
 	private void replaceRight(int x, int y, String[] fourStickers) {
 
+		String up = fourStickers[2];
+		String left = fourStickers[0];
+		String right = fourStickers[3];
+
+		if (y == 0) { //done
+			if (!right.equals("W")) {
+				solvePart.append("F R' ");
+				if (up.equals("W"))
+					solvePart.append("F' ");
+			} else if (!left.equals("W")) {
+				solvePart.append("F' L ");
+				if (!up.equals("W"))
+					solvePart.append("F ");
+			} else
+				solvePart.append("U ");
+		} else if (y == 1) { //done
+			if (x == 0) {
+				if (!left.equals("W"))
+					solvePart.append("L ");
+				else if (!right.equals("W")) {
+					solvePart.append("F' F' R' ");
+					if (up.equals("W"))
+						solvePart.append("F F ");
+				} else {
+					solvePart.append("F U ");
+					if (up.equals("W"))
+						solvePart.append("F' ");
+				}
+			} else if (x == 2) {
+				if (!right.equals("W"))
+					solvePart.append("R' ");
+				else if (!left.equals("W")) {
+					solvePart.append("F F L ");
+					if (up.equals("W"))
+						solvePart.append("F' F' ");
+				} else {
+					solvePart.append("F' U ");
+					if (up.equals("W"))
+						solvePart.append("F ");
+				}
+			}
+		} else if (y == 2) { //done
+			if (!right.equals("W")) {
+				solvePart.append("F' R' ");
+			} else if (!left.equals("W")) {
+				solvePart.append("F L ");
+			} else solvePart.append("F F U ");
+		}
+		applyPart();
 	}
 
 	private void replaceLeft(int x, int y, String[] fourStickers) {
 
-		if (y == 0) { //верх
-			if (!tempFace[0][1].equals("W")) {
-				solvePart.append("F R' ");
-				if (tempFace[1][0].equals("W"))
-					solvePart.append("F' ");
-			} else if (!tempFace[2][1].equals("W")) {
-				solvePart.append("F' L ");
-				if (!tempFace[1][0].equals("W"))
-					solvePart.append("F ");
+		String up = fourStickers[1];
+		String left = fourStickers[3];
+		String right = fourStickers[0];
+
+		if (y == 0) { //done
+			if (!right.equals("W")) {
+				solvePart.append("L F' ");
+				if (up.equals("W"))
+					solvePart.append("L' ");
+			} else if (!left.equals("W")) {
+				solvePart.append("L' B ");
+				if (!up.equals("W"))
+					solvePart.append("L ");
 			} else
 				solvePart.append("U ");
-		} else if (y == 1) { //центральная линия..
-			if (x == 0) {//..справа
-				if (!tempFace[2][1].equals("W"))
-					solvePart.append("L ");
-				else if (!tempFace[0][1].equals("W")) {
-					solvePart.append("F' F' R' ");
-					if (tempFace[1][0].equals("W"))
-						solvePart.append("F F ");
+		} else if (y == 1) { //done
+			if (x == 0) {
+				if (!left.equals("W"))
+					solvePart.append("B ");
+				else if (!right.equals("W")) {
+					solvePart.append("L' L' F' ");
+					if (up.equals("W"))
+						solvePart.append("L L ");
 				} else {
-					solvePart.append("F U ");
-					if (tempFace[1][0].equals("W"))
-						solvePart.append("F' ");
+					solvePart.append("L U ");
+					if (up.equals("W"))
+						solvePart.append("L' ");
 				}
-			} else if (x == 2) { //..слева
-				if (!tempFace[0][1].equals("W"))
-					solvePart.append("R' ");
-				else if (!tempFace[2][1].equals("W")) {
-					solvePart.append("F F L ");
-					if (tempFace[1][0].equals("W"))
-						solvePart.append("F' F' ");
+			} else if (x == 2) {
+				if (!right.equals("W"))
+					solvePart.append("F' ");
+				else if (!left.equals("W")) {
+					solvePart.append("L L B ");
+					if (up.equals("W"))
+						solvePart.append("L' L' ");
 				} else {
-					solvePart.append("F' U ");
-					if (tempFace[1][0].equals("W"))
-						solvePart.append("F ");
+					solvePart.append("L' U ");
+					if (up.equals("W"))
+						solvePart.append("L ");
 				}
 			}
-		} else if (y == 2) { //низ
-			if (!tempFace[0][1].equals("W")) {
-				solvePart.append("F' R' ");
-			} else if (!tempFace[2][1].equals("W")) {
-				solvePart.append("F L ");
-			} else solvePart.append("F F U ");
+		} else if (y == 2) { //done
+			if (!right.equals("W")) {
+				solvePart.append("L' F' ");
+			} else if (!left.equals("W")) {
+				solvePart.append("L B ");
+			} else solvePart.append("L L U ");
 		}
 		applyPart();
 	}
@@ -130,51 +277,51 @@ public class PhaseOne extends AbstractPhase {
 		String right = fourStickers[2];
 
 		if (y == 0) { //done
-			if (!tempFace[1][2].equals("W")) {
+			if (!right.equals("W")) {
 				solvePart.append("F R' ");
-				if (tempFace[0][1].equals("W"))
+				if (up.equals("W"))
 					solvePart.append("F' ");
-			} else if (!tempFace[1][0].equals("W")) {
+			} else if (!left.equals("W")) {
 				solvePart.append("F' L ");
-				if (!tempFace[0][1].equals("W"))
+				if (!up.equals("W"))
 					solvePart.append("F ");
 			} else
 				solvePart.append("U ");
 		} else if (y == 1) { //done
 			if (x == 0) {
-				if (!tempFace[1][0].equals("W"))
+				if (!left.equals("W"))
 					solvePart.append("L ");
-				else if (!tempFace[1][2].equals("W")) {
+				else if (!right.equals("W")) {
 					solvePart.append("F' F' R' ");
-					if (tempFace[0][1].equals("W"))
+					if (up.equals("W"))
 						solvePart.append("F F ");
 				} else {
 					solvePart.append("F U ");
-					if (tempFace[0][1].equals("W"))
+					if (up.equals("W"))
 						solvePart.append("F' ");
 				}
 			} else if (x == 2) {
-				if (!tempFace[1][2].equals("W"))
+				if (!right.equals("W"))
 					solvePart.append("R' ");
-				else if (!tempFace[1][0].equals("W")) {
+				else if (!left.equals("W")) {
 					solvePart.append("F F L ");
-					if (tempFace[0][1].equals("W"))
+					if (up.equals("W"))
 						solvePart.append("F' F' ");
 				} else {
 					solvePart.append("F' U ");
-					if (tempFace[0][1].equals("W"))
+					if (up.equals("W"))
 						solvePart.append("F ");
 				}
 			}
 		} else if (y == 2) { //done
-			if (!tempFace[1][2].equals("W")) {
+			if (!right.equals("W")) {
 				solvePart.append("F' R' ");
-			} else if (!tempFace[1][0].equals("W")) {
+			} else if (!left.equals("W")) {
 				solvePart.append("F L ");
 			} else solvePart.append("F F U ");
 		}
 		applyPart();
-	}
+	}*/
 
 	private boolean isPhaseDone() {
 		boolean done = true;

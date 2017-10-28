@@ -10,8 +10,8 @@ public class Main {
 	public static void main(String[] args) {
 
 		Cube cube = new Cube();
-//		cube.rotateByPattern("D R F R' B L U F D' L B L F' U B L' D F D B");
-		cube.rotateByPattern("F' R U ");
+		cube.rotateByPattern("D R F R' B L U F D' L B L F' U B L' D F D B");
+//		cube.rotateByPattern("F' R U ");
 		Phase phase = new PhaseOne(cube);
 		System.out.println(phase.getCube());
 		phase.computePhase();
