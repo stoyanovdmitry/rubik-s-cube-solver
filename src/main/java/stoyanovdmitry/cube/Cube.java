@@ -2,7 +2,7 @@ package stoyanovdmitry.cube;
 
 import stoyanovdmitry.util.Color;
 
-public class Cube {
+public class Cube implements Cloneable {
 
 	private static final String SPACES = "        ";
 
@@ -38,6 +38,14 @@ public class Cube {
 					{"W", "W", "W"}
 			},
 	};
+
+	public Cube() {
+
+	}
+
+	public Cube(String[][][] cube) {
+		this.cube = cube;
+	}
 
 	public void rotateByPattern(String pattern) {
 
@@ -342,6 +350,12 @@ public class Cube {
 		return faceCopy;
 	}
 
+	//возвращает массив - сторону
+	public String[][] getFaceCopy(Face face) {
+
+		return getFaceCopy(face.ordinal());
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
@@ -409,5 +423,24 @@ public class Cube {
 			default:
 				return Color.RESET.getAnsiColor() + sticker;
 		}
+	}
+
+	private void setCube(String[][][] cube) {
+		this.cube = cube;
+	}
+
+	@Override
+	public Cube clone() throws CloneNotSupportedException {
+
+		String[][][] cubeArrCopy = {
+				getFaceCopy(0),
+				getFaceCopy(1),
+				getFaceCopy(2),
+				getFaceCopy(3),
+				getFaceCopy(4),
+				getFaceCopy(5),
+		};
+
+		return new Cube(cubeArrCopy);
 	}
 }
