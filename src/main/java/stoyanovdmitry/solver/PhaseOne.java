@@ -3,6 +3,9 @@ package stoyanovdmitry.solver;
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
+/**
+ * На данной фазе соибраеться нижний крест
+ */
 public class PhaseOne extends AbstractPhase {
 
 	private static final int[][] COORDINATES = {
@@ -21,6 +24,7 @@ public class PhaseOne extends AbstractPhase {
 		solvePart = new StringBuilder();
 	}
 
+	@Override
 	public void computePhase() {
 
 		while (!isPhaseDone()) {
@@ -177,7 +181,8 @@ public class PhaseOne extends AbstractPhase {
 		applyPart();
 	}
 
-	private boolean isPhaseDone() {
+	@Override
+	public boolean isPhaseDone() {
 		boolean done = true;
 		String[][] down = getCube().getFaceCopy(Face.DOWN);
 

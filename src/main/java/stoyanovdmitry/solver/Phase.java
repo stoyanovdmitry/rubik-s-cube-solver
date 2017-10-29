@@ -6,5 +6,7 @@ public interface Phase {
 
 	void computePhase();
 
+	boolean isPhaseDone();
+
 	Cube getCube();
 }

@@ -14,6 +14,7 @@ public abstract class AbstractPhase implements Phase {
 		}
 	}
 
+	@Override
 	public Cube getCube() {
 		return cube;
 	}
