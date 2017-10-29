@@ -14,14 +14,10 @@ public class PhaseOne extends AbstractPhase {
 			{1, 2},
 			{2, 1},
 	};
-	private StringBuilder solveBuilder;
-	private StringBuilder solvePart;
 
 
 	public PhaseOne(Cube cube) {
 		super(cube);
-		solveBuilder = new StringBuilder();
-		solvePart = new StringBuilder();
 	}
 
 	@Override
@@ -40,7 +36,7 @@ public class PhaseOne extends AbstractPhase {
 
 		String[][] tempFace;
 		for (int[] COORDINATE : COORDINATES) {
-			tempFace = getCube().getFaceCopy(face);
+			tempFace = cube.getFaceCopy(face);
 			int y = COORDINATE[0];
 			int x = COORDINATE[1];
 
@@ -52,7 +48,7 @@ public class PhaseOne extends AbstractPhase {
 
 	private void replace(int x, int y, Face face) {
 
-		String[][] tempFace = getCube().getFaceCopy(Face.DOWN);
+		String[][] tempFace = cube.getFaceCopy(Face.DOWN);
 
 		String[] fourStickers = {tempFace[0][1], tempFace[1][0], tempFace[1][2], tempFace[2][1]}; //стикеры с нижней стороны которые проходят проверку
 
@@ -77,7 +73,7 @@ public class PhaseOne extends AbstractPhase {
 
 	private void doReplaceUp(int x, int y, String[] fourStickers) {
 
-		String[][] upFace = getCube().getFaceCopy(Face.UP);
+		String[][] upFace = cube.getFaceCopy(Face.UP);
 
 		if (y == 2 && !fourStickers[0].equals("W"))
 			solvePart.append("F F ");
@@ -184,7 +180,7 @@ public class PhaseOne extends AbstractPhase {
 	@Override
 	public boolean isPhaseDone() {
 		boolean done = true;
-		String[][] down = getCube().getFaceCopy(Face.DOWN);
+		String[][] down = cube.getFaceCopy(Face.DOWN);
 
 		for (int[] coordinate : COORDINATES) {
 			int y = coordinate[0];
@@ -199,9 +195,4 @@ public class PhaseOne extends AbstractPhase {
 		return done;
 	}
 
-	private void applyPart() {
-		solveBuilder.append(solvePart);
-		getCube().rotateByPattern(solvePart.toString());
-		solvePart = new StringBuilder();
-	}
 }
