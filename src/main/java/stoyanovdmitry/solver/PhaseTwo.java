@@ -3,15 +3,62 @@ package stoyanovdmitry.solver;
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class PhaseTwo extends AbstractPhase {
 
-	PhaseTwo(Cube cube) {
+//	List<Face> sideFaces = Arrays.asList(Face.FRONT, Face.LEFT, Face.RIGHT, Face.BACK);
+
+	public PhaseTwo(Cube cube) {
 		super(cube);
 	}
 
 	@Override
 	public void computePhase() {
 
+		while (!isPhaseDone()) {
+			while (!isFaceDone(Face.FRONT)) {
+				solvePart.append("D ");
+				applyPart();
+			}
+			checkFace(Face.FRONT);
+		}
+	}
+
+	/*private Face getDoneFace() {
+		for (Face sideFace : sideFaces) {
+			if (isFaceDone(sideFace))
+				return sideFace;
+		}
+		return null;
+	}*/
+
+	private void checkFace(Face face) {
+
+		switch (face) {
+			case FRONT:
+				if (isFaceDone(Face.FRONT) && isFaceDone(Face.BACK)) {
+					solvePart.append("L' D L D L' D D L ");
+					solvePart.append("D ");
+					solvePart.append("R' D R D R' D D R ");
+					applyPart();
+				}
+				else if (isFaceDone(Face.FRONT) && isFaceDone(Face.LEFT)) {
+					solvePart.append("D ");
+					solvePart.append("R' D R D R' D D R ");
+					applyPart();
+				}
+				else if (isFaceDone(Face.FRONT) && isFaceDone(Face.RIGHT)) {
+					solvePart.append("D ");
+					solvePart.append("B' D B D B' D D B ");
+					applyPart();
+				}
+				else {
+					solvePart.append("L' D L D L' D D L ");
+					applyPart();
+				}
+		}
 	}
 
 	@Override
@@ -21,17 +68,18 @@ public class PhaseTwo extends AbstractPhase {
 
 		if (!done) return false;
 
-		String[][] frontFace = getCube().getFaceCopy(Face.FRONT);
-		String[][] leftFace = getCube().getFaceCopy(Face.LEFT);
-		String[][] rightFace = getCube().getFaceCopy(Face.RIGHT);
-		String[][] backFace = getCube().getFaceCopy(Face.BACK);
-
-		if (!frontFace[1][1].equals(frontFace[2][1])
-				|| !leftFace[1][1].equals(frontFace[2][1])
-				|| !rightFace[1][1].equals(rightFace[2][1])
-				|| !backFace[1][1].equals(backFace[2][1]))
+		if (!isFaceDone(Face.FRONT) ||
+				!isFaceDone(Face.LEFT) ||
+				!isFaceDone(Face.RIGHT) ||
+				!isFaceDone(Face.BACK))
 			done = false;
 
 		return done;
+	}
+
+	private boolean isFaceDone(Face face) {
+
+		String[][] faceCopy = getCube().getFaceCopy(face);
+		return faceCopy[1][1].equals(faceCopy[2][1]);
 	}
 }
