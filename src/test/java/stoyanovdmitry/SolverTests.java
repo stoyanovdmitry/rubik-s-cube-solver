@@ -1,44 +1,55 @@
 package stoyanovdmitry;
 
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import stoyanovdmitry.cube.Cube;
-import stoyanovdmitry.solver.Phase;
-import stoyanovdmitry.solver.PhaseOne;
-import stoyanovdmitry.solver.PhaseTwo;
+import stoyanovdmitry.solver.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SolverTests {
 
-	private List<Phase> phaseOneList;
-	private List<Phase> phaseTwoList;
+	private static final int COUNT_OF_CUBES = 10000;
 
-	@Before
-	public void beforeTest() {
+	private static List<Phase> phaseOneList;
+	private static List<Phase> phaseTwoList;
+	private static List<Phase> phaseThreeList;
 
-		phaseOneList= new ArrayList<>();
+	@BeforeClass
+	public static void setUp() {
 
-		for (int i = 0; i < 1000; i++) {
+		phaseOneList = new ArrayList<>();
+		for (int i = 0; i < COUNT_OF_CUBES; i++) {
 			Cube tempCube = new Cube();
 			tempCube.shuffle();
 			phaseOneList.add(new PhaseOne(tempCube));
 		}
-
 		for (Phase phase : phaseOneList) {
 			phase.computePhase();
+//			System.out.println(phase.getPhaseSolve());
+//			System.out.println(phase.getCube());
 		}
 
-		phaseTwoList = new ArrayList<>();
 
+		phaseTwoList = new ArrayList<>();
 		for (Phase phase : phaseOneList) {
 			phaseTwoList.add(new PhaseTwo(phase.getCube()));
 		}
-
 		for (Phase phase : phaseTwoList) {
 			phase.computePhase();
+//			System.out.println(phase.getPhaseSolve());
+//			System.out.println(phase.getCube());
+		}
+
+
+		phaseThreeList = new ArrayList<>();
+		for (Phase phase : phaseTwoList) {
+			phaseThreeList.add(new PhaseThree(phase.getCube()));
+		}
+		for (Phase phase : phaseThreeList) {
+			phase.computePhase();
+//			System.out.println(phase.getPhaseSolve());
+//			System.out.println(phase.getCube());
 		}
 	}
 
@@ -60,6 +71,19 @@ public class SolverTests {
 		List<Boolean> isAllPhasesDone = new ArrayList<>();
 
 		for (Phase phase : phaseTwoList) {
+			isAllPhasesDone.add(phase.isPhaseDone());
+		}
+
+		Assert.assertFalse(isAllPhasesDone.contains(false));
+	}
+
+	//	@Ignore
+	@Test
+	public void testPhaseThree() {
+
+		List<Boolean> isAllPhasesDone = new ArrayList<>();
+
+		for (Phase phase : phaseThreeList) {
 			isAllPhasesDone.add(phase.isPhaseDone());
 		}
 
