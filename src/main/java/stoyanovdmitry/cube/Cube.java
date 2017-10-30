@@ -2,9 +2,19 @@ package stoyanovdmitry.cube;
 
 import stoyanovdmitry.util.Color;
 
-public class Cube {
+import java.util.Random;
+
+public class Cube implements Cloneable {
 
 	private static final String SPACES = "        ";
+	private static final String[] TURN_CODES = {
+			"L ", "L' ",
+			"F ", "F' ",
+			"R ", "R' ",
+			"B ", "B' ",
+			"U ", "U' ",
+			"D ", "D' ",
+	};
 
 	private String[][][] cube = {
 			{//LEFT
@@ -39,13 +49,18 @@ public class Cube {
 			},
 	};
 
+	public Cube() {
+
+	}
+
+	public Cube(String[][][] cube) {
+		this.cube = cube;
+	}
+
 	public void rotateByPattern(String pattern) {
 
 		String[] steps = pattern.split(" ");
-		for (String step : steps) {
-			System.out.print(step + " ");
-		}
-		System.out.println();
+
 		for (String step : steps) {
 			switch (step) {
 				case "R":
@@ -105,7 +120,8 @@ public class Cube {
 			}
 
 			clockwiseTurn(2);
-		} else if (isCounterClockwise) {
+		}
+		else if (isCounterClockwise) {
 			for (int i = 0, d = 2; i < 3; i++, d--) {
 				String[] temp = new String[]{
 						cube[1][i][2],
@@ -140,7 +156,8 @@ public class Cube {
 			}
 
 			clockwiseTurn(0);
-		} else if (isCounterClockwise) {
+		}
+		else if (isCounterClockwise) {
 			for (int i = 0, d = 2; i < 3; i++, d--) {
 				String[] temp = new String[]{
 						cube[1][i][0],
@@ -175,7 +192,8 @@ public class Cube {
 			}
 
 			clockwiseTurn(1);
-		} else if (isCounterClockwise) {
+		}
+		else if (isCounterClockwise) {
 			for (int i = 0, d = 2; i < 3; i++, d--) {
 				String[] temp = new String[]{
 						cube[0][i][2],
@@ -210,7 +228,8 @@ public class Cube {
 			}
 
 			clockwiseTurn(3);
-		} else if (isCounterClockwise) {
+		}
+		else if (isCounterClockwise) {
 			for (int i = 0, d = 2; i < 3; i++, d--) {
 				String[] temp = new String[]{
 						cube[0][i][0],
@@ -245,7 +264,8 @@ public class Cube {
 			}
 
 			clockwiseTurn(4);
-		} else if (isCounterClockwise) {
+		}
+		else if (isCounterClockwise) {
 			for (int i = 0, d = 2; i < 3; i++, d--) {
 				String[] temp = new String[]{
 						cube[1][0][i],
@@ -280,7 +300,8 @@ public class Cube {
 			}
 
 			clockwiseTurn(5);
-		} else if (isCounterClockwise) {
+		}
+		else if (isCounterClockwise) {
 			for (int i = 0, d = 2; i < 3; i++, d--) {
 				String[] temp = new String[]{
 						cube[0][2][i],
@@ -342,14 +363,27 @@ public class Cube {
 		return faceCopy;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder()
-				.append(getFace(true)) //todo getFace(isUp)
-				.append(getFaces())//todo getFaces();
-				.append(getFace(false));
+	//возвращает массив - сторону
+	public String[][] getFaceCopy(Face face) {
 
-		return builder.toString();
+		return getFaceCopy(face.ordinal());
+	}
+
+	public void shuffle() {
+		shuffle(100);
+	}
+
+	public void shuffle(int steps) {
+
+		StringBuilder shuffleSteps = new StringBuilder();
+		Random random = new Random();
+
+		for (int i = 0; i < steps; i++) {
+			String temp = TURN_CODES[random.nextInt(TURN_CODES.length)];
+			shuffleSteps.append(temp);
+		}
+
+		rotateByPattern(shuffleSteps.toString());
 	}
 
 	private String getFace(boolean isUp) {
@@ -409,5 +443,34 @@ public class Cube {
 			default:
 				return Color.RESET.getAnsiColor() + sticker;
 		}
+	}
+
+	private void setCube(String[][][] cube) {
+		this.cube = cube;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder()
+				.append(getFace(true))
+				.append(getFaces())
+				.append(getFace(false));
+
+		return builder.toString();
+	}
+
+	@Override
+	public Cube clone() throws CloneNotSupportedException {
+
+		String[][][] cubeArrCopy = {
+				getFaceCopy(0),
+				getFaceCopy(1),
+				getFaceCopy(2),
+				getFaceCopy(3),
+				getFaceCopy(4),
+				getFaceCopy(5),
+		};
+
+		return new Cube(cubeArrCopy);
 	}
 }
