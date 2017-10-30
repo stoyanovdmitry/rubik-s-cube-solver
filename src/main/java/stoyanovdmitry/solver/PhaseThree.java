@@ -66,7 +66,7 @@ public class PhaseThree extends AbstractPhase {
 		applyPart();
 	}
 
-	private Face setUpCornerInRightPosition(Corner corner) { //todo need to add applyPart()
+	private Face setUpCornerInRightPosition(Corner corner) {
 
 		Face face = corner.getFace();
 		List<String> nonWhiteStickers = corner.getNonWhiteStickers();
@@ -75,53 +75,65 @@ public class PhaseThree extends AbstractPhase {
 			case FRONT:
 				if (nonWhiteStickers.contains("B") && nonWhiteStickers.contains("O")) {
 					solvePart.append("U' ");
+					applyPart();
 					return Face.RIGHT;
 				}
 				else if (nonWhiteStickers.contains("O") && nonWhiteStickers.contains("G")) {
 					solvePart.append("U' U' ");
+					applyPart();
 					return Face.BACK;
 				}
 				else if (nonWhiteStickers.contains("G") && nonWhiteStickers.contains("R")) {
 					solvePart.append("U ");
+					applyPart();
 					return Face.LEFT;
 				}
 			case RIGHT:
 				if (nonWhiteStickers.contains("O") && nonWhiteStickers.contains("G")) {
 					solvePart.append("U' ");
+					applyPart();
 					return Face.BACK;
 				}
 				else if (nonWhiteStickers.contains("G") && nonWhiteStickers.contains("R")) {
 					solvePart.append("U' U' ");
+					applyPart();
 					return Face.LEFT;
 				}
 				else if (nonWhiteStickers.contains("R") && nonWhiteStickers.contains("B")) {
 					solvePart.append("U ");
+					applyPart();
 					return Face.FRONT;
 				}
 			case BACK:
 				if (nonWhiteStickers.contains("G") && nonWhiteStickers.contains("R")) {
 					solvePart.append("U' ");
+					applyPart();
 					return Face.LEFT;
 				}
 				else if (nonWhiteStickers.contains("R") && nonWhiteStickers.contains("B")) {
 					solvePart.append("U' U' ");
+					applyPart();
 					return Face.FRONT;
 				}
 				else if (nonWhiteStickers.contains("B") && nonWhiteStickers.contains("O")) {
 					solvePart.append("U ");
+					applyPart();
 					return Face.RIGHT;
 				}
 			case LEFT:
 				if (nonWhiteStickers.contains("R") && nonWhiteStickers.contains("B")) {
 					solvePart.append("U' ");
+					applyPart();
 					return Face.FRONT;
 				}
 				else if (nonWhiteStickers.contains("B") && nonWhiteStickers.contains("O")) {
 					solvePart.append("U' U' ");
+					applyPart();
 					return Face.RIGHT;
 				}
 				else if (nonWhiteStickers.contains("O") && nonWhiteStickers.contains("G")) {
 					solvePart.append("U ");
+					applyPart();
 					return Face.BACK;
 				}
 		}
