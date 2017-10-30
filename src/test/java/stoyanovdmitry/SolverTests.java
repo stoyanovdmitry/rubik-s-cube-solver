@@ -9,11 +9,12 @@ import java.util.List;
 
 public class SolverTests {
 
-	private static final int COUNT_OF_CUBES = 10000;
+	private static final int COUNT_OF_CUBES = 100;
 
 	private static List<Phase> phaseOneList;
 	private static List<Phase> phaseTwoList;
 	private static List<Phase> phaseThreeList;
+	private static List<Phase> phaseFourList;
 
 	@BeforeClass
 	public static void setUp() {
@@ -51,6 +52,17 @@ public class SolverTests {
 //			System.out.println(phase.getPhaseSolve());
 //			System.out.println(phase.getCube());
 		}
+
+
+		phaseFourList = new ArrayList<>();
+		for (Phase phase : phaseThreeList) {
+			phaseFourList.add(new PhaseFour(phase.getCube()));
+		}
+		for (Phase phase : phaseFourList) {
+			phase.computePhase();
+//			System.out.println(phase.getPhaseSolve());
+//			System.out.println(phase.getCube());
+		}
 	}
 
 	@Test
@@ -84,6 +96,18 @@ public class SolverTests {
 		List<Boolean> isAllPhasesDone = new ArrayList<>();
 
 		for (Phase phase : phaseThreeList) {
+			isAllPhasesDone.add(phase.isPhaseDone());
+		}
+
+		Assert.assertFalse(isAllPhasesDone.contains(false));
+	}
+
+	@Test
+	public void testPhaseFour() {
+
+		List<Boolean> isAllPhasesDone = new ArrayList<>();
+
+		for (Phase phase : phaseFourList) {
 			isAllPhasesDone.add(phase.isPhaseDone());
 		}
 

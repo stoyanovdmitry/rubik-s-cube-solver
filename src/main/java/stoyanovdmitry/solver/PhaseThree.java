@@ -66,7 +66,7 @@ public class PhaseThree extends AbstractPhase {
 		applyPart();
 	}
 
-	private Face setUpCornerInRightPosition(Corner corner) {
+	private Face setUpCornerInRightPosition(Corner corner) { //todo need to add applyPart()
 
 		Face face = corner.getFace();
 		List<String> nonWhiteStickers = corner.getNonWhiteStickers();
