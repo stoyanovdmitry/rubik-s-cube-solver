@@ -29,4 +29,8 @@ public abstract class AbstractPhase implements Phase {
 		getCube().rotateByPattern(solvePart.toString());
 		solvePart = new StringBuilder();
 	}
+
+	public String getPhaseSolve() {
+		return solveBuilder.toString();
+	}
 }

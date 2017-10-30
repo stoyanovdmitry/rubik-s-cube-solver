@@ -9,4 +9,6 @@ public interface Phase {
 	boolean isPhaseDone();
 
 	Cube getCube();
+
+	String getPhaseSolve();
 }
