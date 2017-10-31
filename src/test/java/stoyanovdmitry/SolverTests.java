@@ -2,6 +2,7 @@ package stoyanovdmitry;
 
 import org.junit.*;
 import stoyanovdmitry.cube.Cube;
+import stoyanovdmitry.cube.Face;
 import stoyanovdmitry.solver.*;
 
 import java.util.ArrayList;
@@ -9,12 +10,13 @@ import java.util.List;
 
 public class SolverTests {
 
-	private static final int COUNT_OF_CUBES = 100;
+	private static final int COUNT_OF_CUBES = 10000;
 
 	private static List<Phase> phaseOneList;
 	private static List<Phase> phaseTwoList;
 	private static List<Phase> phaseThreeList;
 	private static List<Phase> phaseFourList;
+	private static List<Phase> phaseFiveList;
 
 	@BeforeClass
 	public static void setUp() {
@@ -59,6 +61,17 @@ public class SolverTests {
 			phaseFourList.add(new PhaseFour(phase.getCube()));
 		}
 		for (Phase phase : phaseFourList) {
+			phase.computePhase();
+//			System.out.println(phase.getPhaseSolve());
+//			System.out.println(phase.getCube());
+		}
+
+
+		phaseFiveList = new ArrayList<>();
+		for (Phase phase : phaseFourList) {
+			phaseFiveList.add(new PhaseFive(phase.getCube()));
+		}
+		for (Phase phase : phaseFiveList) {
 			phase.computePhase();
 //			System.out.println(phase.getPhaseSolve());
 //			System.out.println(phase.getCube());
@@ -112,5 +125,37 @@ public class SolverTests {
 		}
 
 		Assert.assertFalse(isAllPhasesDone.contains(false));
+	}
+
+	@Test
+	public void testPhaseFive() {
+
+		List<Boolean> isAllPhasesDone = new ArrayList<>();
+
+		for (Phase phase : phaseFiveList) {
+			isAllPhasesDone.add(phase.isPhaseDone());
+		}
+
+		Assert.assertFalse(isAllPhasesDone.contains(false));
+	}
+
+	@Test
+	public void isPhaseFourYellow() {
+
+		testPhaseFour();
+
+		for (Phase phase : phaseFourList) {
+
+			int counter = 0;
+
+			String[][] faceUp = phase.getCube().getFaceCopy(Face.UP);
+
+			if (faceUp[0][1].equals("Y")) counter++;
+			if (faceUp[1][0].equals("Y")) counter++;
+			if (faceUp[1][2].equals("Y")) counter++;
+			if (faceUp[2][1].equals("Y")) counter++;
+
+			Assert.assertTrue(counter != 1 && counter != 3);
+		}
 	}
 }
