@@ -2,6 +2,7 @@ package stoyanovdmitry.cube;
 
 import stoyanovdmitry.util.Color;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Cube implements Cloneable {
@@ -472,5 +473,20 @@ public class Cube implements Cloneable {
 		};
 
 		return new Cube(cubeArrCopy);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Cube cube1 = (Cube) o;
+
+		return Arrays.deepEquals(cube, cube1.cube);
+	}
+
+	@Override
+	public int hashCode() {
+		return Arrays.deepHashCode(cube);
 	}
 }
