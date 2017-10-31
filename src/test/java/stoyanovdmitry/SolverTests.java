@@ -212,6 +212,16 @@ public class SolverTests {
 	}
 
 	@Test
+	public void isCubeFinished() {
+
+		Cube cube = new Cube();
+
+		for (Phase phase : phaseEightList) {
+			Assert.assertEquals(cube, phase.getCube());
+		}
+	}
+
+	@Test
 	public void isPhaseFourYellow() {
 
 		testPhaseFour();
