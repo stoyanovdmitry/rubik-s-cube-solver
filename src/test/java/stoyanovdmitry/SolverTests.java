@@ -18,6 +18,7 @@ public class SolverTests {
 	private static List<Phase> phaseFourList;
 	private static List<Phase> phaseFiveList;
 	private static List<Phase> phaseSixList;
+	private static List<Phase> phaseSevenList;
 
 	@BeforeClass
 	public static void setUp() {
@@ -84,6 +85,17 @@ public class SolverTests {
 			phaseSixList.add(new PhaseSix(phase.getCube()));
 		}
 		for (Phase phase : phaseSixList) {
+			phase.computePhase();
+//			System.out.println(phase.getPhaseSolve());
+//			System.out.println(phase.getCube());
+		}
+
+
+		phaseSevenList = new ArrayList<>();
+		for (Phase phase : phaseSixList) {
+			phaseSevenList.add(new PhaseSeven(phase.getCube()));
+		}
+		for (Phase phase : phaseSevenList) {
 			phase.computePhase();
 //			System.out.println(phase.getPhaseSolve());
 //			System.out.println(phase.getCube());
@@ -157,6 +169,18 @@ public class SolverTests {
 		List<Boolean> isAllPhasesDone = new ArrayList<>();
 
 		for (Phase phase : phaseSixList) {
+			isAllPhasesDone.add(phase.isPhaseDone());
+		}
+
+		Assert.assertFalse(isAllPhasesDone.contains(false));
+	}
+
+	@Test
+	public void testPhaseSeven() {
+
+		List<Boolean> isAllPhasesDone = new ArrayList<>();
+
+		for (Phase phase : phaseSevenList) {
 			isAllPhasesDone.add(phase.isPhaseDone());
 		}
 
