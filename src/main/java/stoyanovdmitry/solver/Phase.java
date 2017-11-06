@@ -10,5 +10,7 @@ public interface Phase {
 
 	Cube getCube();
 
+	void setCube(Cube cube);
+
 	String getPhaseSolve();
 }

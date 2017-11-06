@@ -10,6 +10,10 @@ public class PhaseFour extends AbstractPhase {
 
 	private List<Face> facesForCheck = Arrays.asList(Face.FRONT, Face.RIGHT, Face.BACK, Face.LEFT);
 
+	PhaseFour() {
+		super();
+	}
+
 	public PhaseFour(Cube cube) {
 		super(cube);
 	}

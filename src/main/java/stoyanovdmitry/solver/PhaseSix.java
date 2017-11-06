@@ -5,6 +5,10 @@ import stoyanovdmitry.cube.Face;
 
 public class PhaseSix extends AbstractPhase {
 
+	PhaseSix() {
+		super();
+	}
+
 	public PhaseSix(Cube cube) {
 		super(cube);
 	}

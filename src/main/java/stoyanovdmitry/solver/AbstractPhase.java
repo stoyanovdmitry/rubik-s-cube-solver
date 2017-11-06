@@ -8,6 +8,11 @@ public abstract class AbstractPhase implements Phase {
 	private StringBuilder solveBuilder;
 	StringBuilder solvePart;
 
+	AbstractPhase() {
+		solveBuilder = new StringBuilder();
+		solvePart = new StringBuilder();
+	}
+
 	AbstractPhase(Cube cube) {
 		try {
 			this.cube = cube.clone();
@@ -19,18 +24,28 @@ public abstract class AbstractPhase implements Phase {
 	}
 
 	@Override
-	public Cube getCube() {
+	public final Cube getCube() {
 		return cube;
 	}
 
+	@Override
+	public final void setCube(Cube cube) {
+		try {
+			this.cube = cube.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		solveBuilder = new StringBuilder();
+		solvePart = new StringBuilder();
+	}
 
-	void applyPart() {
+	final void applyPart() {
 		solveBuilder.append(solvePart);
 		getCube().rotateByPattern(solvePart.toString());
 		solvePart = new StringBuilder();
 	}
 
-	public String getPhaseSolve() {
+	public final String getPhaseSolve() {
 		return solveBuilder.toString();
 	}
 }

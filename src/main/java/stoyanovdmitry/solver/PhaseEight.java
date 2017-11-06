@@ -11,6 +11,10 @@ public class PhaseEight extends AbstractPhase {
 	private List<Face> facesForCheck = Arrays.asList(Face.FRONT, Face.RIGHT, Face.BACK, Face.LEFT);
 	private Face workingFace;
 
+	PhaseEight() {
+		super();
+	}
+
 	public PhaseEight(Cube cube) {
 		super(cube);
 	}

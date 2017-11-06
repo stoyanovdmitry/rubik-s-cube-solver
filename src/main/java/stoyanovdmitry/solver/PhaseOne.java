@@ -14,7 +14,10 @@ public class PhaseOne extends AbstractPhase {
 			{1, 2},
 			{2, 1},
 	};
-
+	
+	PhaseOne() {
+		super();
+	}
 
 	public PhaseOne(Cube cube) {
 		super(cube);
