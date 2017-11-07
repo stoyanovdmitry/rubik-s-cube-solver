@@ -22,7 +22,6 @@ public class PhaseSeven extends AbstractPhase {
 	@Override
 	public void computePhase() {
 
-//		for (int i = 0; i < 5 && !isPhaseDone(); i++) {
 		while (!isPhaseDone()) {
 
 			Corner corner = getCorrectCorner();
@@ -32,7 +31,6 @@ public class PhaseSeven extends AbstractPhase {
 				continue;
 			}
 
-//			for (int k = 0; k < 5 && !isPhaseDone(); k++)
 			while (!isPhaseDone())
 				replaceCorners(corner);
 		}

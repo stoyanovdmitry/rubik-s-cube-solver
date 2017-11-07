@@ -8,8 +8,6 @@ import java.util.List;
 
 public class PhaseTwo extends AbstractPhase {
 
-//	List<Face> sideFaces = Arrays.asList(Face.FRONT, Face.LEFT, Face.RIGHT, Face.BACK);
-
 	PhaseTwo() {
 		super();
 	}
@@ -29,14 +27,6 @@ public class PhaseTwo extends AbstractPhase {
 			checkFace(Face.FRONT);
 		}
 	}
-
-	/*private Face getDoneFace() {
-		for (Face sideFace : sideFaces) {
-			if (isFaceDone(sideFace))
-				return sideFace;
-		}
-		return null;
-	}*/
 
 	private void checkFace(Face face) {
 

@@ -23,8 +23,6 @@ public class PhaseEight extends AbstractPhase {
 	public void computePhase() {
 
 		while (!isPhaseDone()) {
-//		for (int i = 0; i < 5 && !isPhaseDone(); i++) {
-
 			Corner corner = findWrongCorner();
 
 			if (workingFace == null)
