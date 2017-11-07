@@ -1,8 +1,8 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 
-public abstract class AbstractPhase implements Phase {
+abstract class AbstractPhase implements Phase {
 
 	Cube cube;
 	private StringBuilder solveBuilder;

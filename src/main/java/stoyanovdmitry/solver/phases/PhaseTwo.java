@@ -1,15 +1,15 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
-public class PhaseSix extends AbstractPhase {
+class PhaseTwo extends AbstractPhase {
 
-	PhaseSix() {
+	PhaseTwo() {
 		super();
 	}
 
-	public PhaseSix(Cube cube) {
+	PhaseTwo(Cube cube) {
 		super(cube);
 	}
 
@@ -18,7 +18,7 @@ public class PhaseSix extends AbstractPhase {
 
 		while (!isPhaseDone()) {
 			while (!isFaceDone(Face.FRONT)) {
-				solvePart.append("U ");
+				solvePart.append("D ");
 				applyPart();
 			}
 			checkFace(Face.FRONT);
@@ -30,29 +30,32 @@ public class PhaseSix extends AbstractPhase {
 		switch (face) {
 			case FRONT:
 				if (isFaceDone(Face.FRONT) && isFaceDone(Face.BACK)) {
-					solvePart.append("R U R' U R U U R' ");
-					solvePart.append("U ");
-					solvePart.append("L U L' U L U U L' ");
+					solvePart.append("L' D L D L' D D L ");
+					solvePart.append("D ");
+					solvePart.append("R' D R D R' D D R ");
+					applyPart();
 				}
 				else if (isFaceDone(Face.FRONT) && isFaceDone(Face.LEFT)) {
-					solvePart.append("U ");
-					solvePart.append("B U B' U B U U B' ");
+					solvePart.append("D ");
+					solvePart.append("R' D R D R' D D R ");
+					applyPart();
 				}
 				else if (isFaceDone(Face.FRONT) && isFaceDone(Face.RIGHT)) {
-					solvePart.append("U ");
-					solvePart.append("L U L' U L U U L' ");
+					solvePart.append("D ");
+					solvePart.append("B' D B D B' D D B ");
+					applyPart();
 				}
 				else {
-					solvePart.append("R U R' U R U U R' ");
+					solvePart.append("L' D L D L' D D L ");
+					applyPart();
 				}
-				applyPart();
 		}
 	}
 
 	@Override
 	public boolean isPhaseDone() {
 
-		boolean done = new PhaseFive(getCube()).isPhaseDone();
+		boolean done = new PhaseOne(getCube()).isPhaseDone();
 
 		if (!done) return false;
 
@@ -68,6 +71,6 @@ public class PhaseSix extends AbstractPhase {
 	private boolean isFaceDone(Face face) {
 
 		String[][] faceCopy = getCube().getFaceCopy(face);
-		return faceCopy[1][1].equals(faceCopy[0][1]);
+		return faceCopy[1][1].equals(faceCopy[2][1]);
 	}
 }

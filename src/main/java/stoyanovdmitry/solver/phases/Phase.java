@@ -1,4 +1,4 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 

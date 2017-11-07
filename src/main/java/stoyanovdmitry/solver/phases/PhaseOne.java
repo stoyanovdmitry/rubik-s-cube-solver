@@ -1,4 +1,4 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
@@ -6,7 +6,7 @@ import stoyanovdmitry.cube.Face;
 /**
  * На данной фазе соибраеться нижний крест
  */
-public class PhaseOne extends AbstractPhase {
+class PhaseOne extends AbstractPhase {
 
 	private static final int[][] COORDINATES = {
 			{0, 1},
@@ -14,12 +14,12 @@ public class PhaseOne extends AbstractPhase {
 			{1, 2},
 			{2, 1},
 	};
-	
+
 	PhaseOne() {
 		super();
 	}
 
-	public PhaseOne(Cube cube) {
+	PhaseOne(Cube cube) {
 		super(cube);
 	}
 
@@ -53,7 +53,7 @@ public class PhaseOne extends AbstractPhase {
 
 		String[][] tempFace = cube.getFaceCopy(Face.DOWN);
 
-		String[] fourStickers = {tempFace[0][1], tempFace[1][0], tempFace[1][2], tempFace[2][1]}; //стикеры с нижней стороны которые проходят проверку
+		String[] fourStickers = {tempFace[0][1], tempFace[1][0], tempFace[1][2], tempFace[2][1]}; //stickers of bottom face
 
 		switch (face) {
 			case FRONT:
@@ -86,8 +86,11 @@ public class PhaseOne extends AbstractPhase {
 			solvePart.append("R R ");
 		else if (y == 0 && !fourStickers[3].equals("W"))
 			solvePart.append("B B ");
-		else if (y == 2 && upFace[0][1].equals("W") && !fourStickers[3].equals("W"))    //две дополнительные проверки что бы избежать зациклиной до бесконечности верхушки,
-			solvePart.append("B B ");                                                   // когда два стикера расположены друг напротив друга
+
+			// two extra checks for avoid infinity loop
+			// when two stickers at up face placed opposite each other
+		else if (y == 2 && upFace[0][1].equals("W") && !fourStickers[3].equals("W"))
+			solvePart.append("B B ");
 		else if (y == 1 && x == 0 && upFace[1][2].equals("W") && !fourStickers[2].equals("W"))
 			solvePart.append("R R ");
 		else
@@ -98,7 +101,7 @@ public class PhaseOne extends AbstractPhase {
 
 	private void doReplace(int x, int y, String up, String left, String right, Face face) {
 
-		if (y == 0) { //done
+		if (y == 0) {
 			if (!right.equals("W")) {
 				solvePart.append("F R' ");
 				if (up.equals("W"))
@@ -112,7 +115,7 @@ public class PhaseOne extends AbstractPhase {
 			else
 				solvePart.append("U ");
 		}
-		else if (y == 1) { //done
+		else if (y == 1) {
 			if (x == 0) {
 				if (!left.equals("W"))
 					solvePart.append("L ");
@@ -142,7 +145,7 @@ public class PhaseOne extends AbstractPhase {
 				}
 			}
 		}
-		else if (y == 2) { //done
+		else if (y == 2) {
 			if (!right.equals("W")) {
 				solvePart.append("F' R' ");
 			}

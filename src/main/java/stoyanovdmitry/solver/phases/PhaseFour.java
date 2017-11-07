@@ -1,4 +1,4 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
@@ -6,7 +6,7 @@ import stoyanovdmitry.cube.Face;
 import java.util.Arrays;
 import java.util.List;
 
-public class PhaseFour extends AbstractPhase {
+class PhaseFour extends AbstractPhase {
 
 	private List<Face> facesForCheck = Arrays.asList(Face.FRONT, Face.RIGHT, Face.BACK, Face.LEFT);
 
@@ -14,7 +14,7 @@ public class PhaseFour extends AbstractPhase {
 		super();
 	}
 
-	public PhaseFour(Cube cube) {
+	PhaseFour(Cube cube) {
 		super(cube);
 	}
 
@@ -252,7 +252,7 @@ public class PhaseFour extends AbstractPhase {
 				if (!sticker.equals(faceArr[1][1])) return false;
 			}
 		}
-		
+
 		return new PhaseThree(cube).isPhaseDone();
 	}
 
@@ -262,7 +262,7 @@ public class PhaseFour extends AbstractPhase {
 		private String front;
 		private Face face;
 
-		Edge(Face face) {
+		private Edge(Face face) {
 
 			this.face = face;
 
@@ -287,23 +287,23 @@ public class PhaseFour extends AbstractPhase {
 			}
 		}
 
-		public String getUp() {
+		private String getUp() {
 			return up;
 		}
 
-		public String getFront() {
+		private String getFront() {
 			return front;
 		}
 
-		public Face getFace() {
+		private Face getFace() {
 			return face;
 		}
 
-		public List<String> getCollors() {
+		private List<String> getCollors() {
 			return Arrays.asList(up, front);
 		}
 
-		boolean hasYellow() {
+		private boolean hasYellow() {
 			return up.equals("Y") || front.equals("Y");
 		}
 	}
