@@ -1,4 +1,4 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
@@ -6,7 +6,7 @@ import stoyanovdmitry.cube.Face;
 /**
  * На данной фазе соибраеться нижний крест
  */
-public class PhaseOne extends AbstractPhase {
+class PhaseOne extends AbstractPhase {
 
 	private static final int[][] COORDINATES = {
 			{0, 1},
@@ -15,7 +15,7 @@ public class PhaseOne extends AbstractPhase {
 			{2, 1},
 	};
 
-	PhaseOne() {
+	public PhaseOne() {
 		super();
 	}
 

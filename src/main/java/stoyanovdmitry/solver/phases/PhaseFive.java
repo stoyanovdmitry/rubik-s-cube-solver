@@ -1,9 +1,9 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
-public class PhaseFive extends AbstractPhase {
+class PhaseFive extends AbstractPhase {
 
 	private static final int[][] COORDINATES = {
 			{0, 1},

@@ -1,4 +1,4 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
@@ -6,7 +6,7 @@ import stoyanovdmitry.cube.Face;
 import java.util.Arrays;
 import java.util.List;
 
-public class PhaseFour extends AbstractPhase {
+class PhaseFour extends AbstractPhase {
 
 	private List<Face> facesForCheck = Arrays.asList(Face.FRONT, Face.RIGHT, Face.BACK, Face.LEFT);
 

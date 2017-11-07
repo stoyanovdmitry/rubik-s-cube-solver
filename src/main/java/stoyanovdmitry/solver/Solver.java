@@ -1,8 +1,8 @@
 package stoyanovdmitry.solver;
 
 import stoyanovdmitry.cube.Cube;
+import stoyanovdmitry.solver.phases.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Solver {
@@ -15,16 +15,7 @@ public class Solver {
 	public Solver(Cube cube) {
 		this.cube = cube;
 
-		phases = new ArrayList<>();
-
-		phases.add(new PhaseOne());
-		phases.add(new PhaseTwo());
-		phases.add(new PhaseThree());
-		phases.add(new PhaseFour());
-		phases.add(new PhaseFive());
-		phases.add(new PhaseSix());
-		phases.add(new PhaseSeven());
-		phases.add(new PhaseEight());
+		phases = new PhaseFactory().emptyPhases();
 	}
 
 	public String getSolve() {

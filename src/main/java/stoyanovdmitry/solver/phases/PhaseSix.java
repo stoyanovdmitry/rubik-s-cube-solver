@@ -1,9 +1,9 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
-public class PhaseSix extends AbstractPhase {
+class PhaseSix extends AbstractPhase {
 
 	PhaseSix() {
 		super();

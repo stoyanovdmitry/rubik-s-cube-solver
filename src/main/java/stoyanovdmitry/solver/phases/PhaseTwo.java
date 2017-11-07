@@ -1,12 +1,9 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class PhaseTwo extends AbstractPhase {
+class PhaseTwo extends AbstractPhase {
 
 	PhaseTwo() {
 		super();
