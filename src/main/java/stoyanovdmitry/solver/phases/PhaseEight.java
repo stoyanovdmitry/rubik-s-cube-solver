@@ -15,7 +15,7 @@ class PhaseEight extends AbstractPhase {
 		super();
 	}
 
-	public PhaseEight(Cube cube) {
+	PhaseEight(Cube cube) {
 		super(cube);
 	}
 
@@ -148,7 +148,7 @@ class PhaseEight extends AbstractPhase {
 		private String right;
 		private Face face;
 
-		Corner(Face face) {
+		private Corner(Face face) {
 
 			this.face = face;
 
@@ -181,23 +181,23 @@ class PhaseEight extends AbstractPhase {
 			}
 		}
 
-		String getUp() {
+		private String getUp() {
 			return up;
 		}
 
-		String getFront() {
+		private String getFront() {
 			return front;
 		}
 
-		String getRight() {
+		private String getRight() {
 			return right;
 		}
 
-		Face getFace() {
+		private Face getFace() {
 			return face;
 		}
 
-		boolean isCorrect() {
+		private boolean isCorrect() {
 			return up.equals("Y");
 		}
 

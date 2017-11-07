@@ -9,7 +9,7 @@ class PhaseSix extends AbstractPhase {
 		super();
 	}
 
-	public PhaseSix(Cube cube) {
+	PhaseSix(Cube cube) {
 		super(cube);
 	}
 

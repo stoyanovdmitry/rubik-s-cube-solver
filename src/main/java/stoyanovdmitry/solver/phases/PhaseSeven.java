@@ -15,7 +15,7 @@ class PhaseSeven extends AbstractPhase {
 		super();
 	}
 
-	public PhaseSeven(Cube cube) {
+	PhaseSeven(Cube cube) {
 		super(cube);
 	}
 
@@ -94,7 +94,7 @@ class PhaseSeven extends AbstractPhase {
 		private List<String> colors;
 		private Face face;
 
-		Corner(Face face) {
+		private Corner(Face face) {
 
 			colors = new ArrayList<>();
 
@@ -130,11 +130,11 @@ class PhaseSeven extends AbstractPhase {
 			}
 		}
 
-		Face getFace() {
+		private Face getFace() {
 			return face;
 		}
 
-		boolean isCorrect() {
+		private boolean isCorrect() {
 
 			switch (face) {
 				case FRONT:
