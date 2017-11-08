@@ -25,11 +25,10 @@ public class Controller {
 
 	private AtomicInteger currentStep;
 
-	private final Thread playAnimationThread;
+	private Thread playAnimationThread;
 
 	private boolean isPaused;
-	private boolean isStoped;
-	private boolean isPlaying;
+	private boolean isStopped;
 
 
 	@FXML
@@ -69,8 +68,6 @@ public class Controller {
 		cube = new Cube();
 		solveSteps = new ArrayList<>();
 		currentStep = new AtomicInteger(0);
-
-		playAnimationThread = new Thread(this::playNextStep);
 	}
 
 	synchronized private void playNextStep() {
@@ -88,13 +85,41 @@ public class Controller {
 
 				if (isPaused)
 					wait();
-				else if (isStoped) ;
+				else if (isStopped) {
+					returnInitCube();
+					drawCube();
+					wait();
+				}
 				else
-					Thread.sleep(speed * 100);
+					Thread.sleep(speed * 10);
 			}
+
+			disableLeftBlock(true);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void returnInitCube() {
+
+		for (; currentStep.get() > 0; ) {
+
+			String revertedStep = revertStep(
+					solveSteps.get(currentStep.decrementAndGet())
+			);
+			cube.rotateByPattern(revertedStep);
+		}
+	}
+
+	private String revertStep(String s) {
+
+		String step = s;
+
+		if (step.contains("'"))
+			step = step.replaceAll("'", "");
+		else
+			step += "'";
+		return step;
 	}
 
 	@FXML
@@ -102,7 +127,7 @@ public class Controller {
 		drawCube();
 	}
 
-	private void drawCube() {
+	synchronized private void drawCube() {
 
 		for (Face face : Face.values()) {
 
@@ -172,6 +197,8 @@ public class Controller {
 			Solver solver = new Solver(cube.clone());
 			solve = solver.getSolve();
 			solveSteps = Arrays.asList(solve.split(" "));
+			currentStep.set(0);
+			playAnimationThread = new Thread(this::playNextStep);
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
@@ -185,6 +212,7 @@ public class Controller {
 		cube = new Cube();
 		solve = null;
 		solveSteps = null;
+		currentStep.set(0);
 		disableLeftBlock(true);
 
 		drawCube();
@@ -204,14 +232,13 @@ public class Controller {
 
 	@FXML
 	synchronized private void playAnimation() {
-		System.out.println(playAnimationThread.isAlive());
 
 		if (!playAnimationThread.isAlive())
 			playAnimationThread.start();
 		else
 			notify();
 
-		isStoped = false;
+		isStopped = false;
 		isPaused = false;
 
 		playButton.setDisable(true);
@@ -223,7 +250,7 @@ public class Controller {
 	private void pauseAnimation() {
 
 		isPaused = true;
-		isStoped = false;
+		isStopped = false;
 
 		pauseButton.setDisable(true);
 		playButton.setDisable(false);
@@ -231,9 +258,9 @@ public class Controller {
 	}
 
 	@FXML
-	synchronized private void stopAnimation() {
+	private void stopAnimation() {
 
-		isStoped = true;
+		isStopped = true;
 		isPaused = false;
 
 		stopButton.setDisable(true);
