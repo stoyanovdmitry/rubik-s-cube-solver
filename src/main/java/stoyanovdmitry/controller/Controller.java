@@ -70,7 +70,7 @@ public class Controller {
 		currentStep = new AtomicInteger(0);
 	}
 
-	private void playNextStep() {
+	synchronized private void playNextStep() {
 
 		try {
 			for (; currentStep.get() < solveSteps.size(); ) {
@@ -97,6 +97,7 @@ public class Controller {
 			}
 
 			disableLeftBlock(true);
+			disableCentralBlock(false);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -176,6 +177,7 @@ public class Controller {
 
 	@FXML
 	private void shuffleCube() {
+
 		cube.shuffle();
 		solve = null;
 		solveSteps = null;
@@ -191,6 +193,12 @@ public class Controller {
 		playButton.setDisable(b);
 		pauseButton.setDisable(b);
 		stopButton.setDisable(b);
+	}
+
+	private void disableCentralBlock(boolean b) {
+		shuffleButton.setDisable(b);
+		computeButton.setDisable(b);
+		resetButton.setDisable(b);
 	}
 
 	@FXML
@@ -213,6 +221,8 @@ public class Controller {
 
 	@FXML
 	private void resetCube() {
+		isPaused = true;
+
 		cube = new Cube();
 		solve = null;
 		solveSteps = null;
@@ -261,6 +271,8 @@ public class Controller {
 
 		stepBackButton.setDisable(true);
 		stepForwardButton.setDisable(true);
+
+		disableCentralBlock(true);
 	}
 
 	@FXML
@@ -289,5 +301,7 @@ public class Controller {
 
 		stepBackButton.setDisable(false);
 		stepForwardButton.setDisable(false);
+
+		disableCentralBlock(false);
 	}
 }
