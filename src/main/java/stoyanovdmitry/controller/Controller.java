@@ -70,107 +70,9 @@ public class Controller {
 		currentStep = new AtomicInteger(0);
 	}
 
-	synchronized private void playNextStep() {
-
-		try {
-			for (; currentStep.get() < solveSteps.size(); ) {
-
-				int speed = (int) speedSlider.getValue();
-
-				cube.rotateByPattern(
-						solveSteps.get(currentStep.getAndIncrement())
-				);
-				drawCube();
-
-
-				if (isPaused)
-					while (isPaused)
-						Thread.sleep(100);
-				else if (isStopped) {
-					returnInitCube();
-					drawCube();
-					while (isStopped)
-						Thread.sleep(100);
-				}
-				else
-					Thread.sleep(speed * 10);
-			}
-
-			disableLeftBlock(true);
-			disableCentralBlock(false);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void returnInitCube() {
-
-		for (; currentStep.get() > 0; ) {
-
-			String revertedStep = revertStep(
-					solveSteps.get(currentStep.decrementAndGet())
-			);
-			cube.rotateByPattern(revertedStep);
-		}
-	}
-
-	private String revertStep(String s) {
-
-		String step = s;
-
-		if (step.contains("'"))
-			step = step.replaceAll("'", "");
-		else
-			step += "'";
-		return step;
-	}
-
 	@FXML
 	public void initialize() {
 		drawCube();
-	}
-
-	private void drawCube() {
-
-		for (Face face : Face.values()) {
-
-			String[][] faceArr = cube.getFaceCopy(face);
-
-			GridPane currentPane = null;
-
-			switch (face) {
-				case UP:
-					currentPane = up;
-					break;
-				case LEFT:
-					currentPane = left;
-					break;
-				case FRONT:
-					currentPane = front;
-					break;
-				case RIGHT:
-					currentPane = right;
-					break;
-				case BACK:
-					currentPane = back;
-					break;
-				case DOWN:
-					currentPane = down;
-			}
-
-			ObservableList<Node> childrens = currentPane.getChildren();
-
-			for (int i = 0, childNum = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++, childNum++) {
-
-					String sticker = faceArr[i][j];
-
-					childrens.get(childNum)
-							.getStyleClass()
-							.setAll(sticker);
-				}
-			}
-		}
 	}
 
 	//central buttons block
@@ -184,21 +86,6 @@ public class Controller {
 		disableLeftBlock(true);
 
 		drawCube();
-	}
-
-	private void disableLeftBlock(boolean b) {
-		stepBackButton.setDisable(b);
-		stepForwardButton.setDisable(b);
-		speedSlider.setDisable(b);
-		playButton.setDisable(b);
-		pauseButton.setDisable(b);
-		stopButton.setDisable(b);
-	}
-
-	private void disableCentralBlock(boolean b) {
-		shuffleButton.setDisable(b);
-		computeButton.setDisable(b);
-		resetButton.setDisable(b);
 	}
 
 	@FXML
@@ -254,6 +141,10 @@ public class Controller {
 			);
 			drawCube();
 		}
+
+		if (currentStep.get() == solveSteps.size())
+			disableLeftBlock(true);
+		disableCentralBlock(false);
 	}
 
 	@FXML
@@ -304,4 +195,119 @@ public class Controller {
 
 		disableCentralBlock(false);
 	}
+
+
+	private void drawCube() {
+
+		for (Face face : Face.values()) {
+
+			String[][] faceArr = cube.getFaceCopy(face);
+
+			GridPane currentPane = null;
+
+			switch (face) {
+				case UP:
+					currentPane = up;
+					break;
+				case LEFT:
+					currentPane = left;
+					break;
+				case FRONT:
+					currentPane = front;
+					break;
+				case RIGHT:
+					currentPane = right;
+					break;
+				case BACK:
+					currentPane = back;
+					break;
+				case DOWN:
+					currentPane = down;
+			}
+
+			ObservableList<Node> childrens = currentPane.getChildren();
+
+			for (int i = 0, childNum = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++, childNum++) {
+
+					String sticker = faceArr[i][j];
+
+					childrens.get(childNum)
+							.getStyleClass()
+							.setAll(sticker);
+				}
+			}
+		}
+	}
+
+	synchronized private void playNextStep() {
+
+		try {
+			for (; currentStep.get() < solveSteps.size(); ) {
+
+				int speed = (int) speedSlider.getValue();
+
+				cube.rotateByPattern(
+						solveSteps.get(currentStep.getAndIncrement())
+				);
+				drawCube();
+
+
+				if (isPaused)
+					while (isPaused)
+						Thread.sleep(100);
+				else if (isStopped) {
+					returnInitCube();
+					drawCube();
+					while (isStopped)
+						Thread.sleep(100);
+				}
+				else
+					Thread.sleep(speed * 10);
+			}
+
+			disableLeftBlock(true);
+			disableCentralBlock(false);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void returnInitCube() {
+
+		for (; currentStep.get() > 0; ) {
+
+			String revertedStep = revertStep(
+					solveSteps.get(currentStep.decrementAndGet())
+			);
+			cube.rotateByPattern(revertedStep);
+		}
+	}
+
+	private String revertStep(String s) {
+
+		String step = s;
+
+		if (step.contains("'"))
+			step = step.replaceAll("'", "");
+		else
+			step += "'";
+		return step;
+	}
+
+	private void disableLeftBlock(boolean b) {
+		stepBackButton.setDisable(b);
+		stepForwardButton.setDisable(b);
+		speedSlider.setDisable(b);
+		playButton.setDisable(b);
+		pauseButton.setDisable(b);
+		stopButton.setDisable(b);
+	}
+
+	private void disableCentralBlock(boolean b) {
+		shuffleButton.setDisable(b);
+		computeButton.setDisable(b);
+		resetButton.setDisable(b);
+	}
+
 }
