@@ -70,7 +70,7 @@ public class Controller {
 		currentStep = new AtomicInteger(0);
 	}
 
-	synchronized private void playNextStep() {
+	private void playNextStep() {
 
 		try {
 			for (; currentStep.get() < solveSteps.size(); ) {
@@ -84,11 +84,13 @@ public class Controller {
 
 
 				if (isPaused)
-					wait();
+					while (isPaused)
+						Thread.sleep(100);
 				else if (isStopped) {
 					returnInitCube();
 					drawCube();
-					wait();
+					while (isStopped)
+						Thread.sleep(100);
 				}
 				else
 					Thread.sleep(speed * 10);
@@ -127,7 +129,7 @@ public class Controller {
 		drawCube();
 	}
 
-	synchronized private void drawCube() {
+	private void drawCube() {
 
 		for (Face face : Face.values()) {
 
@@ -245,12 +247,10 @@ public class Controller {
 	}
 
 	@FXML
-	synchronized private void playAnimation() {
+	private void playAnimation() {
 
 		if (!playAnimationThread.isAlive())
 			playAnimationThread.start();
-		else
-			notify();
 
 		isStopped = false;
 		isPaused = false;
@@ -258,6 +258,9 @@ public class Controller {
 		playButton.setDisable(true);
 		pauseButton.setDisable(false);
 		stopButton.setDisable(false);
+
+		stepBackButton.setDisable(true);
+		stepForwardButton.setDisable(true);
 	}
 
 	@FXML
@@ -269,6 +272,9 @@ public class Controller {
 		pauseButton.setDisable(true);
 		playButton.setDisable(false);
 		stopButton.setDisable(false);
+
+		stepBackButton.setDisable(false);
+		stepForwardButton.setDisable(false);
 	}
 
 	@FXML
@@ -280,5 +286,8 @@ public class Controller {
 		stopButton.setDisable(true);
 		pauseButton.setDisable(true);
 		playButton.setDisable(false);
+
+		stepBackButton.setDisable(false);
+		stepForwardButton.setDisable(false);
 	}
 }
