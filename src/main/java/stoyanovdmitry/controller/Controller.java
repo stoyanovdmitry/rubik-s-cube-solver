@@ -203,6 +203,8 @@ public class Controller {
 			e.printStackTrace();
 		}
 
+		stepBackButton.setDisable(false);
+		stepForwardButton.setDisable(false);
 		speedSlider.setDisable(false);
 		playButton.setDisable(false);
 	}
@@ -222,12 +224,24 @@ public class Controller {
 
 	@FXML
 	private void stepBack() {
-
+		if (currentStep.get() > 0) {
+			cube.rotateByPattern(
+					revertStep(
+							solveSteps.get(currentStep.decrementAndGet())
+					)
+			);
+			drawCube();
+		}
 	}
 
 	@FXML
 	private void stepForward() {
-
+		if (currentStep.get() < solveSteps.size()) {
+			cube.rotateByPattern(
+					solveSteps.get(currentStep.getAndIncrement())
+			);
+			drawCube();
+		}
 	}
 
 	@FXML
