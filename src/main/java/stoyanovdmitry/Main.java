@@ -1,24 +1,24 @@
 package stoyanovdmitry;
 
-import stoyanovdmitry.cube.Cube;
-import stoyanovdmitry.cube.Face;
-import stoyanovdmitry.solver.Phase;
-import stoyanovdmitry.solver.PhaseOne;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-public class Main {
+public class Main extends Application {
 
 	public static void main(String[] args) {
+		launch(args);
+	}
 
-		Cube cube = new Cube();
-		cube.rotateByPattern("D R F R' B L U F D' L B L F' U B L' D F D B");
-//		cube.rotateByPattern("F' R U ");
-		Phase phase = new PhaseOne(cube);
-		System.out.println(phase.getCube());
-		phase.computePhase();
-		System.out.println(phase.getCube());
-//		System.out.println(cube);
+	@Override
+	public void start(Stage primaryStage) throws Exception {
 
-
-
+		Parent root = FXMLLoader.load(getClass().getResource("/cube-scene.fxml"));
+		root.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
+		primaryStage.setTitle("Rubik's Cube Solver");
+		primaryStage.setScene(new Scene(root));
+		primaryStage.show();
 	}
 }

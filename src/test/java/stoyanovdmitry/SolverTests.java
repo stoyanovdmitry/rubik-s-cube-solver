@@ -3,7 +3,7 @@ package stoyanovdmitry;
 import org.junit.*;
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
-import stoyanovdmitry.solver.*;
+import stoyanovdmitry.solver.phases.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +21,18 @@ public class SolverTests {
 	private static List<Phase> phaseSevenList;
 	private static List<Phase> phaseEightList;
 
+	private static PhaseFactory phaseFactory;
+
 	@BeforeClass
 	public static void setUp() {
+
+		phaseFactory = new PhaseFactory();
 
 		phaseOneList = new ArrayList<>();
 		for (int i = 0; i < COUNT_OF_CUBES; i++) {
 			Cube tempCube = new Cube();
 			tempCube.shuffle();
-			phaseOneList.add(new PhaseOne(tempCube));
+			phaseOneList.add(phaseFactory.create(PhaseNum.ONE, tempCube));
 		}
 		for (Phase phase : phaseOneList) {
 			phase.computePhase();
@@ -39,7 +43,7 @@ public class SolverTests {
 
 		phaseTwoList = new ArrayList<>();
 		for (Phase phase : phaseOneList) {
-			phaseTwoList.add(new PhaseTwo(phase.getCube()));
+			phaseTwoList.add(phaseFactory.create(PhaseNum.TWO, phase.getCube()));
 		}
 		for (Phase phase : phaseTwoList) {
 			phase.computePhase();
@@ -50,7 +54,7 @@ public class SolverTests {
 
 		phaseThreeList = new ArrayList<>();
 		for (Phase phase : phaseTwoList) {
-			phaseThreeList.add(new PhaseThree(phase.getCube()));
+			phaseThreeList.add(phaseFactory.create(PhaseNum.THREE, phase.getCube()));
 		}
 		for (Phase phase : phaseThreeList) {
 			phase.computePhase();
@@ -61,7 +65,7 @@ public class SolverTests {
 
 		phaseFourList = new ArrayList<>();
 		for (Phase phase : phaseThreeList) {
-			phaseFourList.add(new PhaseFour(phase.getCube()));
+			phaseFourList.add(phaseFactory.create(PhaseNum.FOUR, phase.getCube()));
 		}
 		for (Phase phase : phaseFourList) {
 			phase.computePhase();
@@ -72,7 +76,7 @@ public class SolverTests {
 
 		phaseFiveList = new ArrayList<>();
 		for (Phase phase : phaseFourList) {
-			phaseFiveList.add(new PhaseFive(phase.getCube()));
+			phaseFiveList.add(phaseFactory.create(PhaseNum.FIVE, phase.getCube()));
 		}
 		for (Phase phase : phaseFiveList) {
 			phase.computePhase();
@@ -83,7 +87,7 @@ public class SolverTests {
 
 		phaseSixList = new ArrayList<>();
 		for (Phase phase : phaseFiveList) {
-			phaseSixList.add(new PhaseSix(phase.getCube()));
+			phaseSixList.add(phaseFactory.create(PhaseNum.SIX, phase.getCube()));
 		}
 		for (Phase phase : phaseSixList) {
 			phase.computePhase();
@@ -94,7 +98,7 @@ public class SolverTests {
 
 		phaseSevenList = new ArrayList<>();
 		for (Phase phase : phaseSixList) {
-			phaseSevenList.add(new PhaseSeven(phase.getCube()));
+			phaseSevenList.add(phaseFactory.create(PhaseNum.SEVEN, phase.getCube()));
 		}
 		for (Phase phase : phaseSevenList) {
 			phase.computePhase();
@@ -105,7 +109,7 @@ public class SolverTests {
 
 		phaseEightList = new ArrayList<>();
 		for (Phase phase : phaseSevenList) {
-			phaseEightList.add(new PhaseEight(phase.getCube()));
+			phaseEightList.add(phaseFactory.create(PhaseNum.EIGHT, phase.getCube()));
 		}
 		for (Phase phase : phaseEightList) {
 			phase.computePhase();

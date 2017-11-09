@@ -1,4 +1,4 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
@@ -7,18 +7,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PhaseSeven extends AbstractPhase {
+class PhaseSeven extends AbstractPhase {
 
 	private List<Face> facesForCheck = Arrays.asList(Face.RIGHT, Face.BACK, Face.LEFT, Face.FRONT);
 
-	public PhaseSeven(Cube cube) {
+	PhaseSeven() {
+		super();
+	}
+
+	PhaseSeven(Cube cube) {
 		super(cube);
 	}
 
 	@Override
 	public void computePhase() {
 
-//		for (int i = 0; i < 5 && !isPhaseDone(); i++) {
 		while (!isPhaseDone()) {
 
 			Corner corner = getCorrectCorner();
@@ -28,7 +31,6 @@ public class PhaseSeven extends AbstractPhase {
 				continue;
 			}
 
-//			for (int k = 0; k < 5 && !isPhaseDone(); k++)
 			while (!isPhaseDone())
 				replaceCorners(corner);
 		}
@@ -92,7 +94,7 @@ public class PhaseSeven extends AbstractPhase {
 		private List<String> colors;
 		private Face face;
 
-		Corner(Face face) {
+		private Corner(Face face) {
 
 			colors = new ArrayList<>();
 
@@ -128,11 +130,11 @@ public class PhaseSeven extends AbstractPhase {
 			}
 		}
 
-		Face getFace() {
+		private Face getFace() {
 			return face;
 		}
 
-		boolean isCorrect() {
+		private boolean isCorrect() {
 
 			switch (face) {
 				case FRONT:

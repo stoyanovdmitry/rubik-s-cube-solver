@@ -1,18 +1,15 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
-public class PhaseFive extends AbstractPhase {
+class PhaseFive extends AbstractPhase {
 
-	private static final int[][] COORDINATES = {
-			{0, 1},
-			{1, 0},
-			{1, 2},
-			{2, 1},
-	};
+	PhaseFive() {
+		super();
+	}
 
-	public PhaseFive(Cube cube) {
+	PhaseFive(Cube cube) {
 		super(cube);
 	}
 
@@ -90,12 +87,12 @@ public class PhaseFive extends AbstractPhase {
 
 	private class Cross {
 
-		String up;
-		String left;
-		String right;
-		String down;
+		private String up;
+		private String left;
+		private String right;
+		private String down;
 
-		Cross() {
+		private Cross() {
 
 			String[][] face = cube.getFaceCopy(Face.UP);
 
@@ -105,37 +102,29 @@ public class PhaseFive extends AbstractPhase {
 			down = face[2][1];
 		}
 
-		Cross(String[][] face) {
-
-			up = face[0][1];
-			left = face[1][0];
-			right = face[1][2];
-			down = face[2][1];
-		}
-
-		String getUp() {
+		private String getUp() {
 			return up;
 		}
 
-		String getLeft() {
+		private String getLeft() {
 			return left;
 		}
 
-		String getRight() {
+		private String getRight() {
 			return right;
 		}
 
-		String getDown() {
+		private String getDown() {
 			return down;
 		}
 
-		String[] getArray() {
+		private String[] getArray() {
 
 			String[] arr = {up, left, right, down};
 			return arr;
 		}
 
-		boolean isDone() {
+		private boolean isDone() {
 
 			for (String sticker : getArray()) {
 				if (!sticker.equals("Y"))

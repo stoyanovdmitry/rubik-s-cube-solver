@@ -1,11 +1,15 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
-public class PhaseSix extends AbstractPhase {
+class PhaseSix extends AbstractPhase {
 
-	public PhaseSix(Cube cube) {
+	PhaseSix() {
+		super();
+	}
+
+	PhaseSix(Cube cube) {
 		super(cube);
 	}
 

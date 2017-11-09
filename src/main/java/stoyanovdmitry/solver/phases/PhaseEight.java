@@ -1,4 +1,4 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
@@ -6,12 +6,16 @@ import stoyanovdmitry.cube.Face;
 import java.util.Arrays;
 import java.util.List;
 
-public class PhaseEight extends AbstractPhase {
+class PhaseEight extends AbstractPhase {
 
 	private List<Face> facesForCheck = Arrays.asList(Face.FRONT, Face.RIGHT, Face.BACK, Face.LEFT);
 	private Face workingFace;
 
-	public PhaseEight(Cube cube) {
+	PhaseEight() {
+		super();
+	}
+
+	PhaseEight(Cube cube) {
 		super(cube);
 	}
 
@@ -19,8 +23,6 @@ public class PhaseEight extends AbstractPhase {
 	public void computePhase() {
 
 		while (!isPhaseDone()) {
-//		for (int i = 0; i < 5 && !isPhaseDone(); i++) {
-
 			Corner corner = findWrongCorner();
 
 			if (workingFace == null)
@@ -146,7 +148,7 @@ public class PhaseEight extends AbstractPhase {
 		private String right;
 		private Face face;
 
-		Corner(Face face) {
+		private Corner(Face face) {
 
 			this.face = face;
 
@@ -179,23 +181,23 @@ public class PhaseEight extends AbstractPhase {
 			}
 		}
 
-		String getUp() {
+		private String getUp() {
 			return up;
 		}
 
-		String getFront() {
+		private String getFront() {
 			return front;
 		}
 
-		String getRight() {
+		private String getRight() {
 			return right;
 		}
 
-		Face getFace() {
+		private Face getFace() {
 			return face;
 		}
 
-		boolean isCorrect() {
+		private boolean isCorrect() {
 			return up.equals("Y");
 		}
 

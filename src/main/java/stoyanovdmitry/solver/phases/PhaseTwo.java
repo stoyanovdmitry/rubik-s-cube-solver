@@ -1,16 +1,15 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
-import java.util.Arrays;
-import java.util.List;
+class PhaseTwo extends AbstractPhase {
 
-public class PhaseTwo extends AbstractPhase {
+	PhaseTwo() {
+		super();
+	}
 
-//	List<Face> sideFaces = Arrays.asList(Face.FRONT, Face.LEFT, Face.RIGHT, Face.BACK);
-
-	public PhaseTwo(Cube cube) {
+	PhaseTwo(Cube cube) {
 		super(cube);
 	}
 
@@ -25,14 +24,6 @@ public class PhaseTwo extends AbstractPhase {
 			checkFace(Face.FRONT);
 		}
 	}
-
-	/*private Face getDoneFace() {
-		for (Face sideFace : sideFaces) {
-			if (isFaceDone(sideFace))
-				return sideFace;
-		}
-		return null;
-	}*/
 
 	private void checkFace(Face face) {
 

@@ -1,4 +1,4 @@
-package stoyanovdmitry.solver;
+package stoyanovdmitry.solver.phases;
 
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
@@ -7,11 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
-public class PhaseThree extends AbstractPhase {
+class PhaseThree extends AbstractPhase {
 
 	private List<Face> facesForCheck = Arrays.asList(Face.FRONT, Face.RIGHT, Face.BACK, Face.LEFT);
 
-	public PhaseThree(Cube cube) {
+	PhaseThree() {
+		super();
+	}
+
+	PhaseThree(Cube cube) {
 		super(cube);
 	}
 
@@ -252,7 +256,7 @@ public class PhaseThree extends AbstractPhase {
 		private String right;
 		private Face face;
 
-		Corner(Face face) {
+		private Corner(Face face) {
 
 			this.face = face;
 
@@ -285,27 +289,27 @@ public class PhaseThree extends AbstractPhase {
 			}
 		}
 
-		String getUp() {
+		private String getUp() {
 			return up;
 		}
 
-		String getFront() {
+		private String getFront() {
 			return front;
 		}
 
-		String getRight() {
+		private String getRight() {
 			return right;
 		}
 
-		Face getFace() {
+		private Face getFace() {
 			return face;
 		}
 
-		boolean hasWhite() {
+		private boolean hasWhite() {
 			return up.equals("W") || front.equals("W") || right.equals("W");
 		}
 
-		public List<String> getNonWhiteStickers() {
+		private List<String> getNonWhiteStickers() {
 
 			List<String> stickers = new ArrayList<>();
 

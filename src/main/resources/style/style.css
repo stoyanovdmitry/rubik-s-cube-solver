@@ -1,0 +1,39 @@
+.yellow,
+.Y {
+	-fx-background-color: yellow;
+}
+.green,
+.G {
+	-fx-background-color: green;
+}
+.red,
+.R {
+	-fx-background-color: red;
+}
+.blue,
+.B {
+	-fx-background-color: blue;
+}
+.orange,
+.O {
+	-fx-background-color: orange;
+}
+.white,
+.W {
+	-fx-background-color: white;
+}
+.arrow {
+	-fx-background-image: url(/img/arrow.png);
+	-fx-background-size: 25%;
+	-fx-background-repeat: no-repeat;
+	-fx-background-position: center;
+}
+.arrow90 {
+	-fx-rotate: 90deg;
+}
+.arrow180 {
+	-fx-rotate: 180deg;
+}
+.arrow270 {
+	-fx-rotate: 270deg;
+}
