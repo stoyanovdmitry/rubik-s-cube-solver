@@ -30,6 +30,12 @@ public class Controller {
 	private boolean isPaused;
 	private boolean isStopped;
 
+	private List<Node> topRow;
+	private List<Node> bottomRow;
+	private List<Node> leftRow;
+	private List<Node> rightRow;
+	private List<Node> frontRow;
+	private List<Node> backRow;
 
 	@FXML
 	private GridPane up;
@@ -73,6 +79,7 @@ public class Controller {
 	@FXML
 	public void initialize() {
 		drawCube();
+		initRows();
 	}
 
 	//central buttons block
@@ -90,20 +97,24 @@ public class Controller {
 
 	@FXML
 	private void computeCube() {
+
 		try {
+
 			Solver solver = new Solver(cube.clone());
 			solve = solver.getSolve();
 			solveSteps = Arrays.asList(solve.split(" "));
 			currentStep.set(0);
 			playAnimationThread = new Thread(this::playNextStep);
+
+			stepBackButton.setDisable(false);
+			stepForwardButton.setDisable(false);
+			speedSlider.setDisable(false);
+			playButton.setDisable(false);
+
+			showArrows();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-
-		stepBackButton.setDisable(false);
-		stepForwardButton.setDisable(false);
-		speedSlider.setDisable(false);
-		playButton.setDisable(false);
 	}
 
 	@FXML
@@ -130,6 +141,7 @@ public class Controller {
 					)
 			);
 			drawCube();
+			showArrows();
 		}
 	}
 
@@ -140,6 +152,7 @@ public class Controller {
 					solveSteps.get(currentStep.getAndIncrement())
 			);
 			drawCube();
+			showArrows();
 		}
 
 		if (currentStep.get() == solveSteps.size())
@@ -240,6 +253,110 @@ public class Controller {
 		}
 	}
 
+	private void initRows() {
+
+		topRow = new ArrayList<>();
+		bottomRow = new ArrayList<>();
+		leftRow = new ArrayList<>();
+		rightRow = new ArrayList<>();
+		frontRow = new ArrayList<>();
+		backRow = new ArrayList<>();
+
+		GridPane pane = left;
+
+		for (int i = 0; i < 4; i++) {
+
+			ObservableList<Node> childrens = pane.getChildren();
+
+			for (int j = 0; j < 3; j++) {
+				topRow.add(childrens.get(j));
+				bottomRow.add(childrens.get(j + 6));
+			}
+
+			if (pane == left) pane = front;
+			else if (pane == front) pane = right;
+			else if (pane == right) pane = back;
+		}
+
+		pane = up;
+
+		for (int i = 0; i < 3; i++) {
+
+			ObservableList<Node> childrens = pane.getChildren();
+
+			for (int j = 0; j < 8; j += 3) {
+				leftRow.add(childrens.get(j));
+				rightRow.add(childrens.get(j + 2));
+			}
+
+			if (pane == up) pane = front;
+			else if (pane == front) pane = down;
+		}
+
+		ObservableList<Node> childrens = back.getChildren();
+
+		leftRow.add(childrens.get(2));
+		leftRow.add(childrens.get(5));
+		leftRow.add(childrens.get(8));
+
+		rightRow.add(childrens.get(0));
+		rightRow.add(childrens.get(3));
+		rightRow.add(childrens.get(6));
+
+		fillFrontAndBack();
+	}
+
+	private void fillFrontAndBack() {
+
+		GridPane pane = left;
+
+		ObservableList<Node> childrens = pane.getChildren();
+
+		frontRow.add(childrens.get(2));
+		frontRow.add(childrens.get(5));
+		frontRow.add(childrens.get(8));
+
+		backRow.add(childrens.get(0));
+		backRow.add(childrens.get(3));
+		backRow.add(childrens.get(6));
+
+		pane = up;
+
+		childrens = pane.getChildren();
+
+		frontRow.add(childrens.get(6));
+		frontRow.add(childrens.get(7));
+		frontRow.add(childrens.get(8));
+
+		backRow.add(childrens.get(0));
+		backRow.add(childrens.get(1));
+		backRow.add(childrens.get(2));
+
+		pane = right;
+
+		childrens = pane.getChildren();
+
+		frontRow.add(childrens.get(0));
+		frontRow.add(childrens.get(3));
+		frontRow.add(childrens.get(6));
+
+		backRow.add(childrens.get(2));
+		backRow.add(childrens.get(5));
+		backRow.add(childrens.get(8));
+
+		pane = down;
+
+		childrens = pane.getChildren();
+
+		frontRow.add(childrens.get(0));
+		frontRow.add(childrens.get(1));
+		frontRow.add(childrens.get(2));
+
+		backRow.add(childrens.get(6));
+		backRow.add(childrens.get(7));
+		backRow.add(childrens.get(8));
+	}
+
 	synchronized private void playNextStep() {
 
 		try {
@@ -251,6 +368,7 @@ public class Controller {
 						solveSteps.get(currentStep.getAndIncrement())
 				);
 				drawCube();
+				showArrows();
 
 
 				if (isPaused)
@@ -310,4 +428,77 @@ public class Controller {
 		resetButton.setDisable(b);
 	}
 
+	private void showArrows() {
+
+		if (currentStep.get() >= solveSteps.size())
+			return;
+
+		String step = solveSteps.get(currentStep.get());
+
+		if (step.contains("U") || step.contains("D")) showTopDownArrows(step);
+		else if (step.contains("L") || step.contains("R")) showLeftRightArrows(step);
+		else if (step.contains("F") || step.contains("B")) showFrontBackArrows(step);
+	}
+
+	private void showTopDownArrows(String step) {
+
+		String degClass = "arrow180";
+
+		if (step.equals("U'") || step.equals("D")) degClass = "";
+
+		List<Node> currentRow = topRow;
+		if (step.contains("D")) currentRow = bottomRow;
+
+		for (Node node : currentRow) {
+			node.getStyleClass().addAll("arrow", degClass);
+		}
+	}
+
+	private void showLeftRightArrows(String step) {
+
+		String degClass = "arrow90";
+
+		if (step.equals("L'") || step.equals("R")) degClass = "arrow270";
+
+		List<Node> currentRow = leftRow;
+		if (step.contains("R")) currentRow = rightRow;
+
+		for (int i = 0; i < currentRow.size(); i++) {
+			currentRow.get(i).getStyleClass().addAll("arrow", degClass);
+
+			if (i == 8) {
+				if (degClass.equals("arrow90")) degClass = "arrow270";
+				else if (degClass.equals("arrow270")) degClass = "arrow90";
+			}
+		}
+	}
+
+	private void showFrontBackArrows(String step) {
+
+		String leftDeg = "arrow270";
+		String upDeg = "";
+		String rightDeg = "arrow90";
+		String downDeg = "arrow180";
+
+		if (step.equals("F'") || step.equals("B")) {
+			leftDeg = "arrow90";
+			upDeg = "arrow180";
+			rightDeg = "arrow270";
+			downDeg = "";
+		}
+
+		String currentDeg = leftDeg;
+		List<Node> currentRow = frontRow;
+
+		if (step.contains("B")) currentRow = backRow;
+
+		for (int i = 0; i < currentRow.size(); i++) {
+
+			currentRow.get(i).getStyleClass().addAll("arrow", currentDeg);
+
+			if (i == 2) currentDeg = upDeg;
+			else if (i == 5) currentDeg = rightDeg;
+			else if (i == 8) currentDeg = downDeg;
+		}
+	}
 }
