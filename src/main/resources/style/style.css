@@ -1,18 +1,22 @@
 .yellow,
 .Y {
 	-fx-background-color: yellow;
+	-fx-scale-z: 1;
 }
 .green,
 .G {
 	-fx-background-color: green;
+	-fx-text-fill: white;
 }
 .red,
 .R {
 	-fx-background-color: red;
+	-fx-text-fill: white;
 }
 .blue,
 .B {
 	-fx-background-color: blue;
+	-fx-text-fill: white;
 }
 .orange,
 .O {
