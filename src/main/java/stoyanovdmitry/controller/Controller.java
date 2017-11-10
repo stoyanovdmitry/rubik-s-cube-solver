@@ -5,8 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
+import javafx.scene.layout.Pane;
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 import stoyanovdmitry.solver.Solver;
@@ -70,6 +72,21 @@ public class Controller {
 	@FXML
 	private Button resetButton;
 
+
+	@FXML
+	private GridPane paletteGrid;
+	@FXML
+	private Button paintCubeButton;
+	@FXML
+	private Button resetPaintButton;
+	@FXML
+	private Button cancelPaintButton;
+
+	@FXML
+	private String pickedColor;
+	@FXML
+	private Button pickedColorButton;
+
 	public Controller() {
 		cube = new Cube();
 		solveSteps = new ArrayList<>();
@@ -91,6 +108,7 @@ public class Controller {
 		solve = null;
 		solveSteps = null;
 		disableLeftBlock(true);
+		paintCubeButton.setDisable(false);
 
 		drawCube();
 	}
@@ -126,6 +144,7 @@ public class Controller {
 		solveSteps = null;
 		currentStep.set(0);
 		disableLeftBlock(true);
+		paintCubeButton.setDisable(false);
 
 		drawCube();
 	}
@@ -155,8 +174,9 @@ public class Controller {
 			showArrows();
 		}
 
-		if (currentStep.get() == solveSteps.size())
+		if (currentStep.get() == solveSteps.size()) {
 			disableLeftBlock(true);
+		}
 		disableCentralBlock(false);
 	}
 
@@ -209,6 +229,67 @@ public class Controller {
 		disableCentralBlock(false);
 	}
 
+	@FXML
+	private void chooseColor(MouseEvent mouseEvent) {
+
+		Button button = (Button) mouseEvent.getSource();
+		pickedColor = button.getStyleClass().get(1);
+		pickedColorButton = button;
+	}
+
+	@FXML
+	private void paintSticker(MouseEvent mouseEvent) {
+
+		Pane pane = (Pane) mouseEvent.getSource();
+		String remainingStickers = pickedColorButton.getText();
+
+		if (!remainingStickers.equals("0") && pane.getStyleClass().isEmpty())
+			try {
+				pane.getStyleClass().setAll(pickedColor);
+				int decrementedNum = Integer.parseInt(remainingStickers);
+				decrementedNum--;
+				pickedColorButton.setText(String.valueOf(decrementedNum));
+
+				if (decrementedNum == 0 && isPaletteEmpty()) {
+					parseCube();
+					disableCentralBlock(false);
+					disableRightBlock(true);
+					paintCubeButton.setDisable(false);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
+
+	@FXML
+	private void paintCube() {
+
+		for (Node node : paletteGrid.getChildren()) {
+			Button button = (Button) node;
+			button.setText("8");
+		}
+
+		disableLeftBlock(true);
+		disableCentralBlock(true);
+		disableRightBlock(false);
+		clearAllNonCentralStickers();
+		paintCubeButton.setDisable(true);
+	}
+
+	@FXML
+	private void resetPaint() {
+
+		paintCube();
+	}
+
+	@FXML
+	private void cancelPaint() {
+
+		disableCentralBlock(false);
+		disableRightBlock(true);
+		paintCubeButton.setDisable(false);
+		resetCube();
+	}
 
 	private void drawCube() {
 
@@ -381,7 +462,7 @@ public class Controller {
 						Thread.sleep(100);
 				}
 				else
-					Thread.sleep(speed * 10);
+					Thread.sleep(speed * 100);
 			}
 
 			disableLeftBlock(true);
@@ -428,10 +509,22 @@ public class Controller {
 		resetButton.setDisable(b);
 	}
 
+	private void disableRightBlock(boolean b) {
+		for (Node node : paletteGrid.getChildren()) {
+			node.setDisable(b);
+		}
+		paintCubeButton.setDisable(b);
+		resetPaintButton.setDisable(b);
+		cancelPaintButton.setDisable(b);
+	}
+
 	private void showArrows() {
 
-		if (currentStep.get() >= solveSteps.size())
+		if (currentStep.get() >= solveSteps.size()) {
+			paintCubeButton.setDisable(false);
 			return;
+		}
+		paintCubeButton.setDisable(true);
 
 		String step = solveSteps.get(currentStep.get());
 
@@ -499,6 +592,52 @@ public class Controller {
 			if (i == 2) currentDeg = upDeg;
 			else if (i == 5) currentDeg = rightDeg;
 			else if (i == 8) currentDeg = downDeg;
+		}
+	}
+
+	private void parseCube() {
+
+		String[][][] cubeArray = new String[6][3][3];
+
+		List<GridPane> facesList = Arrays.asList(left, front, right, back, up, down);
+
+		for (int i = 0; i < facesList.size(); i++) {
+
+			String[][] faceArray = cubeArray[i];
+
+			List<Node> childrens = facesList.get(i).getChildren();
+
+			for (int j = 0, k = 0; j < 3; j++, k += 3) {
+
+				faceArray[j][0] = childrens.get(k).getStyleClass().get(0);
+				faceArray[j][1] = childrens.get(k + 1).getStyleClass().get(0);
+				faceArray[j][2] = childrens.get(k + 2).getStyleClass().get(0);
+			}
+		}
+
+		cube = new Cube(cubeArray);
+	}
+
+	private boolean isPaletteEmpty() {
+
+		for (Node node : paletteGrid.getChildren()) {
+			Button button = (Button) node;
+			if (!button.getText().equals("0")) return false;
+		}
+		return true;
+	}
+
+	private void clearAllNonCentralStickers() {
+
+		List<GridPane> facesList = Arrays.asList(up, left, front, right, back, down);
+
+		for (GridPane gridPane : facesList) {
+
+			List<Node> childrens = gridPane.getChildren();
+
+			for (int j = 0; j < childrens.size(); j++) {
+				if (j != 4) childrens.get(j).getStyleClass().clear();
+			}
 		}
 	}
 }
