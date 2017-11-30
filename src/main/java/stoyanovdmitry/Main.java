@@ -19,6 +19,8 @@ public class Main extends Application {
 		root.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 		primaryStage.setTitle("Rubik's Cube Solver");
 		primaryStage.setScene(new Scene(root));
+		primaryStage.setMinHeight(825);
+		primaryStage.setMinWidth(900);
 		primaryStage.show();
 	}
 }
