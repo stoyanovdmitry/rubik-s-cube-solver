@@ -6,6 +6,7 @@ import stoyanovdmitry.cube.Face;
 import java.util.Arrays;
 import java.util.List;
 
+// Разворот углов
 class PhaseEight extends AbstractPhase {
 
 	private List<Face> facesForCheck = Arrays.asList(Face.FRONT, Face.RIGHT, Face.BACK, Face.LEFT);

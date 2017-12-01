@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+// Расположение углов верхнего слоя на своих местах.
 class PhaseSeven extends AbstractPhase {
 
 	private List<Face> facesForCheck = Arrays.asList(Face.RIGHT, Face.BACK, Face.LEFT, Face.FRONT);

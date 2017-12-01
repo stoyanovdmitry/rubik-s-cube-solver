@@ -3,6 +3,7 @@ package stoyanovdmitry.solver.phases;
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
+// Выставлем центры соответсвенно нижним стикерам
 class PhaseTwo extends AbstractPhase {
 
 	PhaseTwo() {

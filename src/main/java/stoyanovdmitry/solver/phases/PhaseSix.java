@@ -3,6 +3,7 @@ package stoyanovdmitry.solver.phases;
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
+// Сбор верхних стикеров соответственно цетральным
 class PhaseSix extends AbstractPhase {
 
 	PhaseSix() {

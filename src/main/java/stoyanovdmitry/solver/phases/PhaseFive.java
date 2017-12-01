@@ -3,6 +3,7 @@ package stoyanovdmitry.solver.phases;
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 
+// Сбор верхнего креста
 class PhaseFive extends AbstractPhase {
 
 	PhaseFive() {

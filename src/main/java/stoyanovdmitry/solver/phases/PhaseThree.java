@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 
+// Сбор углов нижнего слоя
 class PhaseThree extends AbstractPhase {
 
 	private List<Face> facesForCheck = Arrays.asList(Face.FRONT, Face.RIGHT, Face.BACK, Face.LEFT);

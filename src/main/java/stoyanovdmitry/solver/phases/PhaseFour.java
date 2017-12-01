@@ -6,6 +6,7 @@ import stoyanovdmitry.cube.Face;
 import java.util.Arrays;
 import java.util.List;
 
+// Сбор второго слоя
 class PhaseFour extends AbstractPhase {
 
 	private List<Face> facesForCheck = Arrays.asList(Face.FRONT, Face.RIGHT, Face.BACK, Face.LEFT);
