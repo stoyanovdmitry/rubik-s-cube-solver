@@ -22,5 +22,8 @@ public class Main extends Application {
 		primaryStage.setMinHeight(825);
 		primaryStage.setMinWidth(900);
 		primaryStage.show();
+
+		//todo add university logos
+		//todo add phases info
 	}
 }
