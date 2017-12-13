@@ -337,6 +337,7 @@
             <Insets top="15.0" />
          </GridPane.margin>
       </GridPane>
+      <Button fx:id="phaseButton" mnemonicParsing="false" onMouseClicked="#showPhase" text="Етап" GridPane.columnIndex="3" />
    </children>
    <padding>
       <Insets bottom="25.0" left="50.0" right="50.0" top="50.0" />

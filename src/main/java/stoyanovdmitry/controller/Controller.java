@@ -12,6 +12,7 @@ import javafx.scene.layout.Pane;
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 import stoyanovdmitry.solver.Solver;
+import stoyanovdmitry.solver.phases.PhaseNum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Controller {
 
 	private List<String> solveSteps;
+	private List<PhaseNum> solvePhasses;
 
 	private String solve;
 	private Cube cube;
