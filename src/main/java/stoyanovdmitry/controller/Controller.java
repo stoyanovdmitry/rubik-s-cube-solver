@@ -1,5 +1,6 @@
 package stoyanovdmitry.controller;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -40,6 +41,9 @@ public class Controller {
 	private List<Node> rightRow;
 	private List<Node> frontRow;
 	private List<Node> backRow;
+
+	@FXML
+	private Button phaseButton;
 
 	@FXML
 	private GridPane up;
@@ -112,6 +116,8 @@ public class Controller {
 		disableLeftBlock(true);
 		paintCubeButton.setDisable(false);
 
+		phaseButton.setVisible(false);
+
 		drawCube();
 	}
 
@@ -131,6 +137,10 @@ public class Controller {
 			speedSlider.setDisable(false);
 			playButton.setDisable(false);
 
+			solvePhasses = solver.getSolveStepPhases();
+			phaseButton.setVisible(true);
+			setPhaseButtonText();
+
 			showArrows();
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
@@ -148,6 +158,8 @@ public class Controller {
 		disableLeftBlock(true);
 		paintCubeButton.setDisable(false);
 
+		phaseButton.setVisible(false);
+
 		drawCube();
 	}
 
@@ -161,6 +173,7 @@ public class Controller {
 							solveSteps.get(currentStep.decrementAndGet())
 					)
 			);
+			setPhaseButtonText();
 			drawCube();
 			showArrows();
 		}
@@ -172,12 +185,15 @@ public class Controller {
 			cube.rotateByPattern(
 					solveSteps.get(currentStep.getAndIncrement())
 			);
+			setPhaseButtonText();
 			drawCube();
 			showArrows();
 		}
 
 		if (currentStep.get() == solveSteps.size()) {
 			disableLeftBlock(true);
+
+			phaseButton.setVisible(false);
 		}
 		disableCentralBlock(false);
 	}
@@ -453,6 +469,8 @@ public class Controller {
 				drawCube();
 				showArrows();
 
+				Platform.runLater(this::setPhaseButtonText);
+
 
 				if (isPaused)
 					while (isPaused)
@@ -469,6 +487,7 @@ public class Controller {
 
 			disableLeftBlock(true);
 			disableCentralBlock(false);
+			phaseButton.setVisible(false);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -641,5 +660,46 @@ public class Controller {
 				if (j != 4) childrens.get(j).getStyleClass().clear();
 			}
 		}
+	}
+
+
+	private void setPhaseButtonText() {
+
+		if(solvePhasses.size() == currentStep.get())
+			return;
+
+		PhaseNum phaseNum = solvePhasses.get(currentStep.get());
+
+		switch (phaseNum) {
+
+			case ONE:
+				phaseButton.setText("Етап 1");
+				break;
+			case TWO:
+				phaseButton.setText("Етап 2");
+				break;
+			case THREE:
+				phaseButton.setText("Етап 3");
+				break;
+			case FOUR:
+				phaseButton.setText("Етап 4");
+				break;
+			case FIVE:
+				phaseButton.setText("Етап 5");
+				break;
+			case SIX:
+				phaseButton.setText("Етап 6");
+				break;
+			case SEVEN:
+				phaseButton.setText("Етап 7");
+				break;
+			case EIGHT:
+				phaseButton.setText("Етап 8");
+				break;
+		}
+	}
+
+
+	public void showPhase(MouseEvent mouseEvent) {
 	}
 }
