@@ -3,13 +3,19 @@ package stoyanovdmitry.controller;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import stoyanovdmitry.cube.Cube;
 import stoyanovdmitry.cube.Face;
 import stoyanovdmitry.solver.Solver;
@@ -665,7 +671,7 @@ public class Controller {
 
 	private void setPhaseButtonText() {
 
-		if(solvePhasses.size() == currentStep.get())
+		if (solvePhasses.size() == currentStep.get())
 			return;
 
 		PhaseNum phaseNum = solvePhasses.get(currentStep.get());
@@ -700,6 +706,27 @@ public class Controller {
 	}
 
 
-	public void showPhase(MouseEvent mouseEvent) {
+	@FXML
+	private void showPhase() {
+		try {
+//			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
+//			Parent root1 = (Parent) fxmlLoader.load();
+//			Stage stage = new Stage();
+//			stage.initModality(Modality.APPLICATION_MODAL);
+//			stage.initStyle(StageStyle.UNDECORATED);
+//			stage.setTitle("ABC");
+//			stage.setScene(new Scene(root1));
+//			stage.show();
+
+			Parent root = FXMLLoader.load(getClass().getResource("/instructions/phase1.fxml"));
+			root.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
+
+			Stage stage = new Stage();
+			stage.setTitle("Інструкція до етапу ");
+			stage.setScene(new Scene(root));
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
