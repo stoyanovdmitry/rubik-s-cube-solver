@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="281.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<ImageView fitHeight="195.0" fitWidth="193.0" layoutX="494.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@../img/3-etap.png" />
+			</image>
+		</ImageView>
+		<Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Спочатку етапу хрест може перебувати в трьох станах, подальші дії будуть виходити з кожного з них:" wrappingWidth="455.982421875">
+			<font>
+				<Font size="14.0" />
+			</font></Text>
+		<Text layoutX="22.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="•Хрест розібраний повністю. Потрібно виконати формулу Ф П В П’ В’ Ф’ і перейти до третього пункту." wrappingWidth="480.98243045806885">
+			<font>
+				<Font size="14.0" />
+			</font></Text>
+		<Text layoutX="22.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="•Хрест зібраний наполовину, два стікера розташовані один проти одного. Розташовуємо стікери так, щоб один був зліва, а інший праворуч. Виконуємо формулу Ф П В П’ В’ Ф’." wrappingWidth="455.9824094772339">
+			<font>
+				<Font size="14.0" />
+			</font></Text>
+		<Text layoutX="22.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="•Хрест зібраний наполовину, два стікера розташовані поруч один з одним. Треба розташувати два стікера так, щоб вони були розташовані зверху і зліва. Виконуємо формулу Ф П В П 'В' Ф 'і повертаємося до другого пункту." wrappingWidth="406.98243045806885">
+			<font>
+				<Font size="14.0" />
+			</font></Text>
+	</children>
+</Pane>

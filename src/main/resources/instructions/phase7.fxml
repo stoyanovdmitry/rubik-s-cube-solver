@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<ImageView fitHeight="195.0" fitWidth="193.0" layoutX="494.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@../img/6-etap.png" />
+			</image>
+		</ImageView>
+		<Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Завданням на даному етапі є розташувати кутові стікери так, щоб вони були повністю рівні за кольором бічним сторонам. Зауважте, на даному етапі не треба перевертати кути верхнім стікером вгору, хоча в ході складання вони можуть встати на свої кінцеві позиції, в цьому немає нічого поганого, так що б куб був повністю зібраний – це задача наступного етапу." wrappingWidth="455.982421875">
+			<font>
+				<Font size="14.0" />
+			</font></Text>
+		<Text layoutX="14.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="На даному етапі користувачу знадобитися лише одна проста формула. Для початку знайдемо один кут, який вже стоїть на своєму місці і розгорнемо куб до себе так, щоб цей кут знаходився на перетині задньої і правої сторін. І почнемо прокручувати формулу: В’П’ · ВЛ · В’П · ВЛ’, повторюємо цю формулу, поки всі кути не будуть знаходитись на своїх місцях і переходимо до завершального етапу, розвороту кутів." wrappingWidth="455.9824094772339">
+			<font>
+				<Font size="14.0" />
+			</font></Text>
+	</children>
+</Pane>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="334.0" prefWidth="736.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<ImageView fitHeight="195.0" fitWidth="193.0" layoutX="494.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+			<image>
+				<Image url="@../img/3-etap.png" />
+			</image>
+		</ImageView>
+		<Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="На даному етапі мі приводимо куб до стану, коли два його шару повністю зібрані, нижній та центральний, як вказано на рисунку 3.4. Даний етап досить простий та потребую знання усього двох формул, котрі дзеркальні один одному. Знаходимо бічну грань на верхньому шарі куба, яку будемо розташовувати між відповідними сторонами. Виставляємо її так, щоб верхній стікер збоку дорівнював центральному стікеру і повертаємо куб до себе цією стороною. Далі в залежності від стікера на верхній стороні робимо наступне:" wrappingWidth="455.982421875">
+			<font>
+				<Font size="14.0" />
+			</font></Text>
+		<Text layoutX="22.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="•Якщо стікер з верхньої сторони дорівнює за кольором правій стороні, виконуємо формулу: В П В’ П’ В’ Ф’ В Ф. " wrappingWidth="480.98243045806885">
+			<font>
+				<Font size="14.0" />
+			</font></Text>
+		<Text layoutX="22.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="•Якщо стікер з верхньої сторони дорівнює за кольором левій стороні: В’ Л’ В Л В Ф В’ Ф’." wrappingWidth="455.9824094772339">
+			<font>
+				<Font size="14.0" />
+			</font></Text>
+		<Text layoutX="11.0" layoutY="285.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Якщо одна з граней застрягла не на своєму місці, достаємо її за допомогою однієї з висче  перерахованих формул. На цьому етап є закінченим." wrappingWidth="713.9824304580688">
+			<font>
+				<Font size="14.0" />
+			</font></Text>
+	</children>
+</Pane>

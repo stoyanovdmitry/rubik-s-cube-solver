@@ -709,20 +709,43 @@ public class Controller {
 	@FXML
 	private void showPhase() {
 		try {
-//			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Demo.fxml"));
-//			Parent root1 = (Parent) fxmlLoader.load();
-//			Stage stage = new Stage();
-//			stage.initModality(Modality.APPLICATION_MODAL);
-//			stage.initStyle(StageStyle.UNDECORATED);
-//			stage.setTitle("ABC");
-//			stage.setScene(new Scene(root1));
-//			stage.show();
 
-			Parent root = FXMLLoader.load(getClass().getResource("/instructions/phase1.fxml"));
+			String phaseUrl = "";
+
+			switch (solvePhasses.get(currentStep.get())) {
+
+				case ONE:
+					phaseUrl = "phase1.fxml";
+					break;
+				case TWO:
+					phaseUrl = "phase2.fxml";
+					break;
+				case THREE:
+					phaseUrl = "phase3.fxml";
+					break;
+				case FOUR:
+					phaseUrl = "phase4.fxml";
+					break;
+				case FIVE:
+					phaseUrl = "phase5.fxml";
+					break;
+				case SIX:
+					phaseUrl = "phase6.fxml";
+					break;
+				case SEVEN:
+					phaseUrl = "phase7.fxml";
+					break;
+				case EIGHT:
+					phaseUrl = "phase8.fxml";
+					break;
+			}
+
+			Parent root = FXMLLoader.load(getClass().getResource("/instructions/" + phaseUrl));
 			root.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 
 			Stage stage = new Stage();
-			stage.setTitle("Інструкція до етапу ");
+			stage.setResizable(false);
+			stage.setTitle(phaseButton.getText());
 			stage.setScene(new Scene(root));
 			stage.show();
 		} catch (Exception e) {
