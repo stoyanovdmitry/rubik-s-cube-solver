@@ -710,6 +710,16 @@ public class Controller {
 	private void showPhase() {
 		try {
 
+			boolean isPlaying = false;
+
+			phaseButton.setDisable(true);
+			if (!pauseButton.isDisable() && !stopButton.isDisable()) {
+				isPaused = true;
+				pauseButton.setDisable(true);
+				stopButton.setDisable(true);
+				isPlaying = true;
+			}
+
 			String phaseUrl = "";
 
 			switch (solvePhasses.get(currentStep.get())) {
@@ -747,6 +757,15 @@ public class Controller {
 			stage.setResizable(false);
 			stage.setTitle(phaseButton.getText());
 			stage.setScene(new Scene(root));
+			boolean finalIsPlaying = isPlaying;
+			stage.setOnCloseRequest(event -> {
+				phaseButton.setDisable(false);
+				if (finalIsPlaying) {
+					pauseButton.setDisable(false);
+					stopButton.setDisable(false);
+					isPaused = false;
+				}
+			});
 			stage.show();
 		} catch (Exception e) {
 			e.printStackTrace();
